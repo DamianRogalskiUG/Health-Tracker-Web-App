@@ -80,6 +80,7 @@ export default function Home() {
         </div>
 
         <button type="submit">Submit</button>
+        <button>logout</button>
       </form>
       <h2>Register</h2>
       <form onSubmit={formikRegister.handleSubmit}>

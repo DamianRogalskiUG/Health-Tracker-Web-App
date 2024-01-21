@@ -4,9 +4,11 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const mqtt = require('mqtt');
 
 const app = express();
 const port = 4000;
+
 
 app.use(cors());
 app.use(cookieParser());
@@ -19,6 +21,32 @@ app.use(
       cookie: { secure: false }, // Set secure to true if using HTTPS
     })
   );
+
+  const requireAuth = (req, res, next) => {
+    if (!req.session.user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    next();
+  };
+
+  const mqttOptions = {
+    clientId: 'client_1', // Provide a unique client ID
+    clean: true,
+  };
+  
+  const mqttUrl = 'mqtt://localhost:1883';
+
+  const mqttClient = mqtt.connect(mqttUrl, mqttOptions);
+
+  mqttClient.on('connect', () => {
+    console.log('Connected to MQTT broker');
+  });
+  
+  mqttClient.on('error', (error) => {
+    console.error('MQTT connection error:', error);
+  });
+  
+
 
 app.get('/', async (req, res) => {
     try {
@@ -84,11 +112,13 @@ app.post('/register', async (req, res) => {
       if (!passwordMatch) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
+      req.session.user = user;
+      console.log(req.session.user)
+
+
         res.json({ success: true, user });
       
     } catch (error) {
-      req.session.user = user;
-        console.log(req.session.user)
       console.log(error);
       res.status(500).json({ error: 'Internal server error' });
     } 
@@ -129,7 +159,7 @@ app.delete('/users', async (req, res) => {
     } 
 });
 
-app.get('/measurements', async (req, res) => {
+app.get('/measurements', requireAuth, async (req, res) => {
     try {
         const client = await connect();
         const db = client.db("health_tracker");
