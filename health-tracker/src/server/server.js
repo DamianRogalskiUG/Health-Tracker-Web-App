@@ -18,7 +18,7 @@ app.use(
       secret: 'top-secret-password',
       resave: false,
       saveUninitialized: true,
-      cookie: { secure: false }, // Set secure to true if using HTTPS
+      cookie: { secure: false },
     })
   );
 
@@ -29,14 +29,10 @@ app.use(
     next();
   };
 
-  const mqttOptions = {
-    clientId: 'client_1', // Provide a unique client ID
-    clean: true,
-  };
   
   const mqttUrl = 'mqtt://localhost:1883';
 
-  const mqttClient = mqtt.connect(mqttUrl, mqttOptions);
+  const mqttClient = mqtt.connect(mqttUrl);
 
   mqttClient.on('connect', () => {
     console.log('Connected to MQTT broker');
@@ -46,6 +42,18 @@ app.use(
     console.error('MQTT connection error:', error);
   });
   
+  mqttClient.subscribe('user-registered', (err) => {
+    if (!err) {
+      console.log('Subscribed to topic: user-registered');
+    }
+  });
+
+  mqttClient.on('message', (topic, message) => {
+    if (topic === 'user-registered') {
+      const newUser = JSON.parse(message.toString());
+      console.log('New user registered:', newUser);
+    }
+  });
 
 
 app.get('/', async (req, res) => {
@@ -85,7 +93,9 @@ app.post('/register', async (req, res) => {
   
       const result = await db.collection('users').insertOne(newUser);
       if (result) {
+        mqttClient.publish('user-registered', JSON.stringify(newUser));
         res.status(201).json({ success: true, user: newUser });
+
       } else {
         res.status(500).json({ error: 'Failed to register user' });
       }
