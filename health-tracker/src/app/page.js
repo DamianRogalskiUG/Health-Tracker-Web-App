@@ -18,7 +18,10 @@ export default function Home() {
           "Content-Type": "application/json",
         },
       });
-      console.log(res);
+      if (res.ok) {
+        const data = await res.json();
+        console.log('Zalogowano');
+      }
     },
   });
 
@@ -36,6 +39,10 @@ export default function Home() {
           "Content-Type": "application/json",
         },
       });
+      if (res.ok) {
+        const data = await res.json();
+        console.log('Zarejestrowano');
+      }
     },
   });
 

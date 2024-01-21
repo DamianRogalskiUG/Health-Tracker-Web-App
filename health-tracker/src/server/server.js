@@ -2,15 +2,31 @@ const express = require('express');
 const { connect } = require('./db/conn')
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 4000;
 
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
+app.use(
+    session({
+      secret: 'top-secret-password',
+      resave: false,
+      saveUninitialized: true,
+      cookie: { secure: false }, // Set secure to true if using HTTPS
+    })
+  );
 
 app.get('/', async (req, res) => {
     try {
+        if (!req.session.user) {
+            console.log('Unauthorized');
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+        console.log(req.session.user);
         const client = await connect();
         const db = client.db("health_tracker");
         const result = await db.collection('users').find({}).toArray();
@@ -26,35 +42,23 @@ app.post('/register', async (req, res) => {
     try {
       const client = await connect();
       const db = client.db("health_tracker");
-  
-      // Assuming the users collection has fields 'email' and 'password'
       const { email, password } = req.body;
-  
-      // Check if the email is already registered
       const existingUser = await db.collection('users').findOne({ email: email });
   
       if (existingUser) {
-        // Email is already in use
         return res.status(400).json({ error: 'Email is already registered' });
       }
+        const hashedPassword = await bcrypt.hash(password, 10);
   
-      // Hash the password before storing it
-      const hashedPassword = await bcrypt.hash(password, 10);
-  
-      // Create a new user object
       const newUser = {
         email: email,
         password: hashedPassword,
       };
   
-      // Insert the new user into the database
       const result = await db.collection('users').insertOne(newUser);
-  
-      if (result.insertedCount === 1) {
-        // User registration successful
+      if (result) {
         res.status(201).json({ success: true, user: newUser });
       } else {
-        // Failed to insert user
         res.status(500).json({ error: 'Failed to register user' });
       }
   
@@ -68,33 +72,35 @@ app.post('/register', async (req, res) => {
     try {
       const client = await connect();
       const db = client.db("health_tracker");
-  
-      // Assuming the users collection has fields 'email' and 'password'
       const { email, password } = req.body;
       
-      // Fetch user from the database based on the provided email
-      const user = await db.collection('users').findOne({ email });
+      const user = await db.collection('users').findOne({ email: email });
   
       if (!user) {
-        // User not found
         return res.status(401).json({ error: 'Invalid credentials' });
       }
-  
-      // Compare the provided password with the hashed password from the database
       const passwordMatch = await bcrypt.compare(password, user.password);
   
       if (!passwordMatch) {
-        // Passwords do not match
         return res.status(401).json({ error: 'Invalid credentials' });
       }
-  
-      // Successfully authenticated
-      res.json({ success: true, user });
+        res.json({ success: true, user });
       
     } catch (error) {
+      req.session.user = user;
+        console.log(req.session.user)
       console.log(error);
       res.status(500).json({ error: 'Internal server error' });
     } 
+  });
+  app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ error: 'Failed to log out' });
+      }
+      res.clearCookie('connect.sid');
+      return res.json({ success: true });
+    });
   });
 
 app.patch('/users', async (req, res) => {
