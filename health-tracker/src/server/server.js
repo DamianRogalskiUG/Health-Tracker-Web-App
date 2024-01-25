@@ -2,33 +2,40 @@ const express = require('express');
 const { connect } = require('./db/conn')
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const mqtt = require('mqtt');
+const jwt = require('jsonwebtoken');
+
 
 const app = express();
 const port = 4000;
+const JWT_SECRET = 'secret_password';
 
 
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
-app.use(
-    session({
-      secret: 'top-secret-password',
-      resave: false,
-      saveUninitialized: true,
-      cookie: { secure: false },
-    })
-  );
 
-  const requireAuth = (req, res, next) => {
-    if (!req.session.user) {
-      return res.status(401).json({ error: 'Unauthorized' });
+const createToken = (user) => {
+    const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+    return token;
+};
+
+const authenticateJWT = (req, res, next) => {
+    const token = req.header('Authorization');
+
+    if (!token) {
+        return res.status(401).json({ error: 'Unauthorized' });
     }
-    next();
-  };
 
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) {
+            return res.status(403).json({ error: 'Invalid token' });
+        }
+        req.user = user;
+        next();
+    });
+};
   
   const mqttUrl = 'mqtt://localhost:1883';
 
@@ -36,17 +43,18 @@ app.use(
 
   mqttClient.on('connect', () => {
     console.log('Connected to MQTT broker');
+    mqttClient.subscribe('user-registered', (err) => {
+        if (!err) {
+          console.log('Subscribed to topic: user-registered');
+        }
+      });
   });
   
   mqttClient.on('error', (error) => {
     console.error('MQTT connection error:', error);
   });
   
-  mqttClient.subscribe('user-registered', (err) => {
-    if (!err) {
-      console.log('Subscribed to topic: user-registered');
-    }
-  });
+
 
   mqttClient.on('message', (topic, message) => {
     if (topic === 'user-registered') {
@@ -58,11 +66,7 @@ app.use(
 
 app.get('/', async (req, res) => {
     try {
-        if (!req.session.user) {
-            console.log('Unauthorized');
-            return res.status(401).json({ error: 'Unauthorized' });
-        }
-        console.log(req.session.user);
+
         const client = await connect();
         const db = client.db("health_tracker");
         const result = await db.collection('users').find({}).toArray();
@@ -122,25 +126,19 @@ app.post('/register', async (req, res) => {
       if (!passwordMatch) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
-      req.session.user = user;
-      console.log(req.session.user)
 
 
-        res.json({ success: true, user });
-      
+
+      const token = createToken(user);
+      res.json({ success: true, user, token });
+
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: 'Internal server error' });
     } 
   });
   app.post('/logout', (req, res) => {
-    req.session.destroy((err) => {
-      if (err) {
-        return res.status(500).json({ error: 'Failed to log out' });
-      }
-      res.clearCookie('connect.sid');
-      return res.json({ success: true });
-    });
+
   });
 
 app.patch('/users', async (req, res) => {
@@ -169,7 +167,7 @@ app.delete('/users', async (req, res) => {
     } 
 });
 
-app.get('/measurements', requireAuth, async (req, res) => {
+app.get('/measurements', async (req, res) => {
     try {
         const client = await connect();
         const db = client.db("health_tracker");

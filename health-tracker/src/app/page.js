@@ -1,7 +1,7 @@
 'use client'
 import styles from "./page.module.css";
 import { useFormik } from "formik";
-
+import Cookie from "js-cookie";
 
 
 export default function Home() {
@@ -20,7 +20,8 @@ export default function Home() {
       });
       if (res.ok) {
         const data = await res.json();
-        console.log('Zalogowano');
+        Cookie.set("token", data.token);
+        alert('Zalogowano');
       }
     },
   });
@@ -32,7 +33,7 @@ export default function Home() {
       passwordConfirm: "",
     },
     onSubmit: async (values) => {
-      const res =await fetch("http://localhost:4000/register", { 
+      const res = await fetch("http://localhost:4000/register", { 
         method: "POST",
         body: JSON.stringify(values),
         headers: {
@@ -41,7 +42,8 @@ export default function Home() {
       });
       if (res.ok) {
         const data = await res.json();
-        console.log('Zarejestrowano');
+        alert('Zarejestrowano');
+
       }
     },
   });
