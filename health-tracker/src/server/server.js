@@ -104,7 +104,13 @@ app.post('/register', async (req, res) => {
     } 
   });
   app.post('/logout', (req, res) => {
-
+    try {
+      res.clearCookie('token');
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Internal server error' });
+    } 
   });
 
 app.patch('/users', async (req, res) => {

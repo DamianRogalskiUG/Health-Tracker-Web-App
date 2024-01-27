@@ -26,6 +26,7 @@ export default function Home() {
         Cookie.set("token", data.token);
         alert('Zalogowano');
         client.publish('user/login', 'User logged in successfully', { qos: 0, retain: false });
+        setUser(data);
       }
     },
   });
@@ -48,13 +49,36 @@ export default function Home() {
         const data = await res.json();
         alert('Zarejestrowano');
         client.publish('user/register', 'User registered in successfully', { qos: 0, retain: false });
+        setUser(data);
+      }
+    },
+  });
 
+  const formikLogout = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      const res = await fetch("http://localhost:4000/logout", { 
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        Cookie.set("token", data.token);
+        alert('Wylogowano');
+        client.publish('user/logout', 'User logged out successfully', { qos: 0, retain: false });
+        setUser(null);
       }
     },
   });
 
   const [client, setClient] = useState(null);
-
+  const [user, setUser] = useState(null);
   useEffect(() => {
     const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
     const host = 'ws://broker.emqx.io:8083/mqtt';
@@ -91,6 +115,7 @@ export default function Home() {
       
       client.subscribe('user/login', { qos: 0 });
       client.subscribe('user/register', { qos: 0 });
+      client.subscribe('user/logout', { qos: 0 });
     });
 
     client.on('message', (topic, message, packet) => {
@@ -100,6 +125,8 @@ export default function Home() {
         toast.success('Logged in successfully');
       } else if (topic === 'user/register') {
         toast.success('Registered successfully');
+      } else if (topic === 'user/logout') {
+        toast.success('Logged out successfully');
       }
     });
 
@@ -108,7 +135,7 @@ export default function Home() {
       console.log('Disconnecting mqtt client');
       client.end();
     };
-  }, []);
+  }, [setUser]);
 
   return (
     <>
@@ -144,7 +171,6 @@ export default function Home() {
         </div>
 
         <button type="submit">Submit</button>
-        <button>logout</button>
       </form>
       <h2>Register</h2>
       <form onSubmit={formikRegister.handleSubmit}>
@@ -196,7 +222,16 @@ export default function Home() {
 
         <button type="submit">Submit</button>
       </form>
-
+      <h2>Logout</h2>
+      <form onSubmit={formikLogout.handleSubmit}>
+        <button type="submit">Log out</button>
+      </form>
+      {user ? (
+        <div className={styles.connected}>User is Connected</div>
+      ) : (
+        <div className={styles.disconnected}>User is Disconnected</div>
+      )
+      }
     </>
   );
 }
