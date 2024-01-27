@@ -205,11 +205,25 @@ app.delete('/measurements', async (req, res) => {
 
 app.patch('/measurements', async (req, res) => {
     try {
+        const { email, weight, height } = req.body;
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('measurements').updateOne(req.body);
-        console.log(result);
-        res.json(result);
+        const existingUser = await db.collection('measurements').findOne(
+            { email: email }
+
+        );
+        if (!existingUser) {
+            return res.status(400).json({ error: 'Email has no measurements' });
+        } else {
+            const result = await db.collection('measurements').updateOne({
+                email: email
+            },
+                { $set: { weight: weight, height: height } }
+            );
+            console.log(result);
+            res.json(result);
+        }
+
         
     } catch (error) {
         console.log(error)

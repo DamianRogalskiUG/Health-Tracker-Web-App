@@ -245,6 +245,37 @@ export default function Home() {
     }
   });
 
+  const formikPatchMeasurements = useFormik({
+    initialValues: {
+      weight: "",
+      height: "",
+      email: "",
+    },
+    validationSchema: Yup.object({
+      weight: Yup.number().required("Required"),
+      height: Yup.number().required("Required"),
+      email: Yup.string().email("Invalid email address").required("Required"),
+      }),
+    onSubmit: async (values) => {
+      console.log(values.email)
+      const res = await fetch(`http://localhost:4000/measurements`, {
+        method: "PATCH",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        alert("Zmieniono pomiary");
+        client.publish('user/measurementsPatch', 'User updated measurements successfully', { qos: 0, retain: false });
+
+      } else {
+        alert('Błąd przy zmianie pomiarów');
+      }
+    }
+  });
+
 
   useEffect(() => {
     if (client) {
@@ -315,6 +346,8 @@ export default function Home() {
       client.subscribe('user/deleteUser', { qos: 0 });
       client.subscribe('user/measurementsGet', { qos: 0 });
       client.subscribe('user/measurementsPost', { qos: 0 });
+      client.subscribe('user/measurementsPatch', { qos: 0 });
+
     });
 
     client.on('message', (topic, message, packet) => {
@@ -336,6 +369,8 @@ export default function Home() {
         toast.success('Got measurements successfully');
       } else if (topic === 'user/measurementsPost') {
         toast.success('Added measurements successfully');
+      } else if (topic === 'user/measurementsPatch') {
+        toast.success('Updated measurements successfully');
       }
     });
 
@@ -623,7 +658,50 @@ export default function Home() {
             </div>
             <button type="submit">Add measurements</button>
           </form>
-
+        <h2>Change measurements</h2>
+          <form onSubmit={formikPatchMeasurements.handleSubmit}>
+            <div>
+              <label htmlFor="weight">Weight</label>
+              <input
+                type="number"
+                id="weight"
+                name="weight"
+                onChange={formikPatchMeasurements.handleChange}
+                value={formikPatchMeasurements.values.weight}
+              />
+              {formikPatchMeasurements.errors.weight ? (
+                <div className={styles.error}>{formikPatchMeasurements.errors.weight}</div>
+              ) : null}
+            </div>
+            <div>
+              <label htmlFor="height">Height</label>
+              <input
+                type="number"
+                id="height"
+                name="height"
+                onChange={formikPatchMeasurements.handleChange}
+                value={formikPatchMeasurements.values.height}
+              />
+              {formikPatchMeasurements.errors.height ? (
+                <div className={styles.error}>{formikPatchMeasurements.errors.height}</div>
+              ) : null}
+            </div>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                onChange={formikPatchMeasurements.handleChange}
+                value={formikPatchMeasurements.values.email}
+              />
+              {formikPatchMeasurements.errors.email ? (
+                <div className={styles.error}>{formikPatchMeasurements.errors.email}</div>
+              ) : null}
+            </div>
+            <button type="submit">Change measurements</button>
+          </form>
+          
         
     </>
   );
