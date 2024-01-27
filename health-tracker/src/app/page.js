@@ -19,28 +19,7 @@ export default function Home() {
   const [chatMessages, setChatMessages] = useState([]);
   const [users, setUsers] = useState([]);
 
-  const formikGetUsers = useFormik({
-    initialValues: {
-      email: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      const res = await fetch("http://localhost:4000/users", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        console.log(data);
-        setUsers(data);
-        alert('Pobrano dane');
-      } else {
-        alert('Błąd pobierania danych');
-      }
-    }
-  });
+  
 
   const formik = useFormik({
     initialValues: {
@@ -62,6 +41,8 @@ export default function Home() {
         alert('Zalogowano');
         setUser(data);
         client.publish('user/login', 'User logged in successfully', { qos: 0, retain: false });
+        client.publish('user/presence', 'User is online', { qos: 0, retain: false });
+
       } else {
         alert('Błąd logowania');
       }
@@ -148,6 +129,7 @@ export default function Home() {
         const data = await res.json();
         alert('Zmieniono dane');
         setUser(data);
+        client.publish('user/updateUser', 'User updated the account successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd zmiany danych');
       }
@@ -171,6 +153,7 @@ export default function Home() {
         const data = await res.json();
         if (data.success) {
           alert('Usunięto konto');
+          client.publish('user/deleteUser', 'User deleted the account successfully', { qos: 0, retain: false });
         } else {
           alert('Błąd przy usuwaniu konta');
         }
@@ -180,6 +163,14 @@ export default function Home() {
       }
     }
   });
+
+  useEffect(() => {
+    if (client) {
+      client.subscribe('user/presence', { qos: 0 });
+    }
+  }, [client]);
+
+  
 
 
   useEffect(() => {
@@ -234,21 +225,29 @@ export default function Home() {
 
     client.on('connect', () => {
       console.log(`Client connected: ${clientId}`);
-      
+
       client.subscribe('user/login', { qos: 0 });
       client.subscribe('user/register', { qos: 0 });
       client.subscribe('user/logout', { qos: 0 });
+      client.subscribe('user/updateUser', { qos: 0 });
+      client.subscribe('user/deleteUser', { qos: 0 });
     });
 
     client.on('message', (topic, message, packet) => {
+      if (topic === 'user/presence') {
+        toast.info(`${client.toString()} is online`);
+      }
       console.log(`Received Message: ${message.toString()} On topic: ${topic}`);
-
       if (topic === 'user/login') {
         toast.success('Logged in successfully');
       } else if (topic === 'user/register') {
         toast.success('Registered successfully');
       } else if (topic === 'user/logout') {
         toast.success('Logged out successfully');
+      } else if (topic === 'user/updateUser') {
+        toast.success('Updated the account successfully');
+      } else if (topic === 'user/deleteUser') {
+        toast.success('Deleted the account successfully');
       }
     });
 
@@ -455,33 +454,7 @@ export default function Home() {
           </div>
           <button type="submit">Submit</button>
         </form>
-        <h2>Get users</h2>
-        <form onSubmit={formikGetUsers.handleSubmit}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              onChange={formikGetUsers.handleChange}
-              value={formikGetUsers.values.email}
-            />
-            {formikGetUsers.errors.email ? (
-              <div className={styles.error}>{formikGetUsers.errors.email}</div>
-            ) : null}
-            </div>
-          <button type="submit">Get users</button>
-        </form>
-        {users && users.length > 0 ? (
-          <div className={styles.users}>
-            {users.map((user, index) => (
-              <div key={index} className={styles.user}>
-                <strong>{user.email}</strong>
-              </div>
-            ))}
-          </div>
-        ) : null
-        }
+
     </>
   );
 }
