@@ -76,9 +76,40 @@ export default function Home() {
       }
     },
   });
+  const formikChat = useFormik({
+    initialValues: {
+      message: "",
+    },
+    onSubmit: (values) => {
+      if (client) {
+        client.publish('chat/messages', JSON.stringify({ user, message: values.message }), { qos: 0, retain: false });
+      
+      }
+    },
+  });
 
   const [client, setClient] = useState(null);
   const [user, setUser] = useState(null);
+  const [chatMessages, setChatMessages] = useState([]);
+
+  useEffect(() => {
+    if (client) {
+      client.subscribe('chat/messages', { qos: 0 });
+    }
+  }, [client]);
+
+  useEffect(() => {
+    if (client) {
+      client.on('message', (topic, message) => {
+        if (topic === 'chat/messages') {
+          const newMessage = JSON.parse(message.toString());
+          setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+        }
+      });
+    }
+  }, [client]);
+
+
   useEffect(() => {
     const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
     const host = 'ws://broker.emqx.io:8083/mqtt';
@@ -226,12 +257,44 @@ export default function Home() {
       <form onSubmit={formikLogout.handleSubmit}>
         <button type="submit">Log out</button>
       </form>
-      {user ? (
+      {user && user.success ? (
         <div className={styles.connected}>User is Connected</div>
       ) : (
         <div className={styles.disconnected}>User is Disconnected</div>
       )
       }
+            <h2>Chat</h2>
+      <div className={styles.chatContainer}>
+        <div className={styles.chatMessages}>
+          {chatMessages.map((msg, index) => (
+            <div key={index} className={styles.chatMessage}>
+              {user === null ? (
+              <>
+              <strong>Anonim user</strong> {msg.message}
+              </>
+              ) : (
+              <>
+              <strong>{msg.user.user.email}</strong> {msg.message}
+              </>
+              )}
+
+            </div>
+          ))}
+        </div>
+        <form onSubmit={formikChat.handleSubmit}>
+          <div>
+            <label htmlFor="message">Message</label>
+            <input
+              type="text"
+              id="message"
+              name="message"
+              onChange={formikChat.handleChange}
+              value={formikChat.values.message}
+            />
+          </div>
+          <button type="submit">Send</button>
+        </form>
+      </div>
     </>
   );
 }
