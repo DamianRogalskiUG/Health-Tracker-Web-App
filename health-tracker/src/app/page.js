@@ -27,6 +27,8 @@ export default function Home() {
         alert('Zalogowano');
         client.publish('user/login', 'User logged in successfully', { qos: 0, retain: false });
         setUser(data);
+      } else {
+        alert('Błąd logowania');
       }
     },
   });
@@ -50,6 +52,8 @@ export default function Home() {
         alert('Zarejestrowano');
         client.publish('user/register', 'User registered in successfully', { qos: 0, retain: false });
         setUser(data);
+      } else {
+        alert('Błąd rejestracji');
       }
     },
   });
@@ -86,6 +90,50 @@ export default function Home() {
       
       }
     },
+  });
+  const formikUserPatch = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      const res = await fetch("http://localhost:4000/users", {
+        method: "PATCH",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        alert('Zmieniono dane');
+        setUser(data);
+      } else {
+        alert('Błąd zmiany danych');
+      }
+    }
+  });
+  const formikUserDelete = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      const res = await fetch("http://localhost:4000/users", {
+        method: "DELETE",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        alert('Usunięto konto');
+        setUser(data);
+      } else {
+        alert('Błąd usuwania konta');
+      }
+    }
   });
 
   const [client, setClient] = useState(null);
@@ -293,6 +341,74 @@ export default function Home() {
             />
           </div>
           <button type="submit">Send</button>
+        </form>
+        <h2>Change user data</h2>
+        <form onSubmit={formikUserPatch.handleSubmit}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              onChange={formikUserPatch.handleChange}
+              value={formikUserPatch.values.email}
+            />
+            {formikUserPatch.errors.email ? (
+              <div className={styles.error}>{formikUserPatch.errors.email}</div>
+            ) : null}
+          </div>
+
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              onChange={formikUserPatch.handleChange}
+              value={formikUserPatch.values.password}
+            />
+            {formikUserPatch.errors.password ? (
+              <div className={styles.error}>
+                {formikUserPatch.errors.password}
+              </div>
+            ) : null}
+          </div>
+
+          <button type="submit">Submit</button>
+        </form>
+        <h2>Delete user</h2>
+        <form onSubmit={formikUserDelete.handleSubmit}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              onChange={formikUserDelete.handleChange}
+              value={formikUserDelete.values.email}
+            />
+            {formikUserDelete.errors.email ? (
+              <div className={styles.error}>{formikUserDelete.errors.email}</div>
+            ) : null}
+          </div>
+
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              onChange={formikUserDelete.handleChange}
+              value={formikUserDelete.values.password}
+            />
+            {formikUserDelete.errors.password ? (
+              <div className={styles.error}>
+                {formikUserDelete.errors.password}
+              </div>
+            ) : null}
+          </div>
+
+          <button type="submit">Submit</button>
         </form>
       </div>
     </>

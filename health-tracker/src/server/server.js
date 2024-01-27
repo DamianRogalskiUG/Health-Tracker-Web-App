@@ -130,12 +130,14 @@ app.delete('/users', async (req, res) => {
     try {
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('users').deleteOne(req.body);
-        console.log(result);
-        res.json(result);
-        
+        const result = await db.collection('users').deleteOne({
+            email: req.body.email
+        });
+        if (result) {
+            res.json(result);
+        }
     } catch (error) {
-        console.log(error)
+        console.error(error)
     } 
 });
 
