@@ -235,11 +235,20 @@ app.patch('/measurements', async (req, res) => {
 
 app.get('/targets', async (req, res) => {
     try {
+        const { name } = req.body;
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('targets').find({}).toArray();
-        console.log(result);
-        res.json(result);
+        if (!name) {
+            const result = await db.collection('targets').find({}).toArray();
+            console.log(result);
+            res.json(result);
+        } else {
+            const result = await db.collection('targets').find({
+                name: name
+            }).toArray();
+            console.log(result);
+            res.json(result);
+        }
         
     } catch (error) {
         console.log(error)

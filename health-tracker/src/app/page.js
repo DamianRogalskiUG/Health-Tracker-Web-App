@@ -303,6 +303,32 @@ export default function Home() {
     }
   });
 
+  const formikGetTargets = useFormik({
+    initialValues: {
+      name: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      }),
+    onSubmit: async (values) => {
+      const res = await fetch(`http://localhost:4000/targets`, {
+        method: "GET",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        alert("Pobrano cele");
+        client.publish('user/targetsGet', 'User got targets successfully', { qos: 0, retain: false });
+
+      } else {
+        alert('Błąd przy pobieraniu celów');
+      }
+    }
+  });
+
 
 
   useEffect(() => {
@@ -375,7 +401,7 @@ export default function Home() {
       client.subscribe('user/measurementsGet', { qos: 0 });
       client.subscribe('user/measurementsPost', { qos: 0 });
       client.subscribe('user/measurementsPatch', { qos: 0 });
-
+      client.subscribe('user/measurementsDelete', { qos: 0 });
     });
 
     client.on('message', (topic, message, packet) => {
@@ -399,6 +425,8 @@ export default function Home() {
         toast.success('Added measurements successfully');
       } else if (topic === 'user/measurementsPatch') {
         toast.success('Updated measurements successfully');
+      } else if (topic === 'user/measurementsDelete') {
+        toast.success('Deleted measurements successfully');
       }
     });
 
@@ -746,7 +774,25 @@ export default function Home() {
             </div>
             <button type="submit">Delete measurements</button>
           </form>
-        
+        <h1>Targets</h1>
+        <h2>Get targets</h2>
+        <form onSubmit={formikGetTargets.handleSubmit}>
+          <div>
+            <label htmlFor="name">Name</label>
+            <input
+              type="name"
+              id="name"
+              name="name"
+              onChange={formikGetTargets.handleChange}
+              value={formikGetTargets.values.name}
+            />
+            {formikGetTargets.errors.name ? (
+              <div className={styles.error}>{formikGetTargets.errors.name}</div>
+            ) : null}
+          </div>
+          <button type="submit">Get targets</button>
+        </form>
+
     </>
   );
 }
