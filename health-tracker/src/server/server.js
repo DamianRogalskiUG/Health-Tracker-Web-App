@@ -192,9 +192,12 @@ app.post('/measurements', async (req, res) => {
 
 app.delete('/measurements', async (req, res) => {
     try {
+        const { email } = req.body;
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('measurements').deleteOne(req.body);
+        const result = await db.collection('measurements').deleteOne(
+            { email: email }
+        );
         console.log(result);
         res.json(result);
         

@@ -276,6 +276,34 @@ export default function Home() {
     }
   });
 
+  const formikDeleteMeasurements = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      }),
+    onSubmit: async (values) => {
+      console.log(values.email)
+      const res = await fetch(`http://localhost:4000/measurements`, {
+        method: "DELETE",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        alert("Usunięto pomiary");
+        client.publish('user/measurementsDelete', 'User deleted measurements successfully', { qos: 0, retain: false });
+
+      } else {
+        alert('Błąd przy usuwaniu pomiarów');
+      }
+    }
+  });
+
+
 
   useEffect(() => {
     if (client) {
@@ -701,7 +729,23 @@ export default function Home() {
             </div>
             <button type="submit">Change measurements</button>
           </form>
-          
+        <h2>Delete measurements</h2>
+          <form onSubmit={formikDeleteMeasurements.handleSubmit}>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                onChange={formikDeleteMeasurements.handleChange}
+                value={formikDeleteMeasurements.values.email}
+              />
+              {formikDeleteMeasurements.errors.email ? (
+                <div className={styles.error}>{formikDeleteMeasurements.errors.email}</div>
+              ) : null}
+            </div>
+            <button type="submit">Delete measurements</button>
+          </form>
         
     </>
   );
