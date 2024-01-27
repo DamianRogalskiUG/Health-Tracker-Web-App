@@ -7,10 +7,39 @@ import mqtt from "mqtt";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
+
 export default function Home() {
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
+  });
+
+  const [client, setClient] = useState(null);
+  const [user, setUser] = useState(null);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [users, setUsers] = useState([]);
+
+  const formikGetUsers = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      const res = await fetch("http://localhost:4000/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
+        setUsers(data);
+        alert('Pobrano dane');
+      } else {
+        alert('Błąd pobierania danych');
+      }
+    }
   });
 
   const formik = useFormik({
@@ -140,17 +169,18 @@ export default function Home() {
       });
       if (res.ok) {
         const data = await res.json();
-        alert('Usunięto konto');
+        if (data.success) {
+          alert('Usunięto konto');
+        } else {
+          alert('Błąd przy usuwaniu konta');
+        }
         setUser(data);
       } else {
-        alert('Błąd usuwania konta');
+        alert('Błąd przy usuwaniu konta');
       }
     }
   });
 
-  const [client, setClient] = useState(null);
-  const [user, setUser] = useState(null);
-  const [chatMessages, setChatMessages] = useState([]);
 
   useEffect(() => {
     if (client) {
@@ -342,7 +372,7 @@ export default function Home() {
 
             </div>
           ))}
-        </div>
+      </div>
         <form onSubmit={formikChat.handleSubmit}>
           <div>
             <label htmlFor="message">Message</label>
@@ -356,6 +386,8 @@ export default function Home() {
           </div>
           <button type="submit">Send</button>
         </form>
+    </div>
+
         <h2>Change user data</h2>
         <form onSubmit={formikUserPatch.handleSubmit}>
           <div>
@@ -421,11 +453,35 @@ export default function Home() {
               </div>
             ) : null}
           </div>
-
           <button type="submit">Submit</button>
         </form>
-      </div>
-
+        <h2>Get users</h2>
+        <form onSubmit={formikGetUsers.handleSubmit}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              onChange={formikGetUsers.handleChange}
+              value={formikGetUsers.values.email}
+            />
+            {formikGetUsers.errors.email ? (
+              <div className={styles.error}>{formikGetUsers.errors.email}</div>
+            ) : null}
+            </div>
+          <button type="submit">Get users</button>
+        </form>
+        {users && users.length > 0 ? (
+          <div className={styles.users}>
+            {users.map((user, index) => (
+              <div key={index} className={styles.user}>
+                <strong>{user.email}</strong>
+              </div>
+            ))}
+          </div>
+        ) : null
+        }
     </>
   );
 }

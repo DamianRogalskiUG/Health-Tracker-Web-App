@@ -13,7 +13,6 @@ const app = express();
 const port = 4000;
 const JWT_SECRET = 'secret_password';
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server, path: "/notification" });
 
 
 app.use(cors());
@@ -30,7 +29,7 @@ const createToken = (user) => {
   const mqttClient = mqtt.connect(mqttUrl);
 
 
-app.get('/', async (req, res) => {
+app.get('/users', async (req, res) => {
     try {
 
         const client = await connect();
@@ -117,7 +116,12 @@ app.patch('/users', async (req, res) => {
     try {
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('users').updateOne(req.body);
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+        const result = await db.collection('users').updateOne(
+            { email: req.body.email },
+            { $set: { password: hashedPassword } }
+        );
         console.log(result);
         res.json(result);
         
