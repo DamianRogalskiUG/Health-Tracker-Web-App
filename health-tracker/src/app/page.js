@@ -205,10 +205,42 @@ export default function Home() {
       });
       if (res.ok) {
         const data = await res.json();
-        alert(data);
+        alert("Pobrano pomiary");
         setMeasurements(data);
+        client.publish('user/logout', 'User got measurements successfully', { qos: 0, retain: false });
+
       } else {
         alert('Błąd przy pobieraniu pomiarów');
+      }
+    }
+  });
+  const formikPostMeasurements = useFormik({
+    initialValues: {
+      weight: "",
+      height: "",
+      email: "",
+    },
+    validationSchema: Yup.object({
+      weight: Yup.number().required("Required"),
+      height: Yup.number().required("Required"),
+      email: Yup.string().email("Invalid email address").required("Required"),
+      }),
+    onSubmit: async (values) => {
+      console.log(values.email)
+      const res = await fetch(`http://localhost:4000/measurements`, {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        alert("Dodano pomiary");
+        client.publish('user/logout', 'User added measurements successfully', { qos: 0, retain: false });
+
+      } else {
+        alert('Błąd przy dodawaniu pomiarów');
       }
     }
   });
@@ -281,6 +313,8 @@ export default function Home() {
       client.subscribe('user/logout', { qos: 0 });
       client.subscribe('user/updateUser', { qos: 0 });
       client.subscribe('user/deleteUser', { qos: 0 });
+      client.subscribe('user/measurementsGet', { qos: 0 });
+      client.subscribe('user/measurementsPost', { qos: 0 });
     });
 
     client.on('message', (topic, message, packet) => {
@@ -298,6 +332,10 @@ export default function Home() {
         toast.success('Updated the account successfully');
       } else if (topic === 'user/deleteUser') {
         toast.success('Deleted the account successfully');
+      } else if (topic === 'user/measurementsGet') {
+        toast.success('Got measurements successfully');
+      } else if (topic === 'user/measurementsPost') {
+        toast.success('Added measurements successfully');
       }
     });
 
@@ -542,6 +580,51 @@ export default function Home() {
             ))}
           </div>
         )}
+        <h2>Add measurements</h2>
+          <form onSubmit={formikPostMeasurements.handleSubmit}>
+            <div>
+              <label htmlFor="weight">Weight</label>
+              <input
+                type="number"
+                id="weight"
+                name="weight"
+                onChange={formikPostMeasurements.handleChange}
+                value={formikPostMeasurements.values.weight}
+              />
+              {formikPostMeasurements.errors.weight ? (
+                <div className={styles.error}>{formikPostMeasurements.errors.weight}</div>
+              ) : null}
+            </div>
+            <div>
+              <label htmlFor="height">Height</label>
+              <input
+                type="number"
+                id="height"
+                name="height"
+                onChange={formikPostMeasurements.handleChange}
+                value={formikPostMeasurements.values.height}
+              />
+              {formikPostMeasurements.errors.height ? (
+                <div className={styles.error}>{formikPostMeasurements.errors.height}</div>
+              ) : null}
+            </div>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                onChange={formikPostMeasurements.handleChange}
+                value={formikPostMeasurements.values.email}
+              />
+              {formikPostMeasurements.errors.email ? (
+                <div className={styles.error}>{formikPostMeasurements.errors.email}</div>
+              ) : null}
+            </div>
+            <button type="submit">Add measurements</button>
+          </form>
+
+        
     </>
   );
 }

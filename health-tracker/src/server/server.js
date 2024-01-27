@@ -167,9 +167,21 @@ app.get('/measurements', async (req, res) => {
 
 app.post('/measurements', async (req, res) => {
     try {
+        const { email, weight, height } = req.body;
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('measurements').findOne(req.body);
+        const existingUser = await db.collection('measurements').findOne(
+            { email: email }
+
+        );
+        if (existingUser) {
+            return res.status(400).json({ error: 'Email has already measurements' });
+        } else {
+            const result = await db.collection('measurements').insertOne(
+                { email: email, weight: weight, height: height }
+            );
+            res.json(result);
+        }
         console.log(result);
         res.json(result);
         
