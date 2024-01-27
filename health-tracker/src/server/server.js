@@ -235,7 +235,7 @@ app.patch('/measurements', async (req, res) => {
 
 app.get('/targets', async (req, res) => {
     try {
-        const { name } = req.body;
+        const { name } = req.query.name;
         const client = await connect();
         const db = client.db("health_tracker");
         if (!name) {

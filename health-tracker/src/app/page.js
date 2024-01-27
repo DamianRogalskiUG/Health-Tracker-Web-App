@@ -20,6 +20,7 @@ export default function Home() {
   const [users, setUsers] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [measurements, setMeasurements] = useState([]);
+  const [targets, setTargets] = useState([]);
 
   
     const addNotification = (message, type) => {
@@ -307,13 +308,9 @@ export default function Home() {
     initialValues: {
       name: "",
     },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Required"),
-      }),
     onSubmit: async (values) => {
-      const res = await fetch(`http://localhost:4000/targets`, {
+      const res = await fetch(`http://localhost:4000/targets?name=${values.name}`, {
         method: "GET",
-        body: JSON.stringify(values),
         headers: {
           "Content-Type": "application/json",
         },
@@ -321,6 +318,7 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         alert("Pobrano cele");
+        setTargets(data);
         client.publish('user/targetsGet', 'User got targets successfully', { qos: 0, retain: false });
 
       } else {
@@ -786,13 +784,19 @@ export default function Home() {
               onChange={formikGetTargets.handleChange}
               value={formikGetTargets.values.name}
             />
-            {formikGetTargets.errors.name ? (
-              <div className={styles.error}>{formikGetTargets.errors.name}</div>
-            ) : null}
           </div>
           <button type="submit">Get targets</button>
         </form>
-
+        {targets && targets.length > 0  && (
+          <div className={styles.targets}>
+            {targets.map((target, index) => (
+              <div key={index} className={styles.target}>
+                <span>{target.name}</span>
+                <span>{target.desc}</span>
+              </div>
+            ))}
+          </div>
+        )}
     </>
   );
 }
