@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import Cookie from "js-cookie";
 import mqtt from "mqtt";
 import { toast } from "react-toastify";
-import * as yup from "yup";
+import * as Yup from "yup";
 
 export default function Home() {
   const validationSchema = Yup.object({
@@ -18,7 +18,7 @@ export default function Home() {
       email: "",
       password: "",
     },
-    validate: validationSchema,
+    validationSchema: validationSchema,
     onSubmit: async (values) => {
       const res = await fetch("http://localhost:4000/login", { 
         method: "POST",
@@ -45,7 +45,7 @@ export default function Home() {
       password: "",
       passwordConfirm: "",
     },
-    validate: validationSchema,
+    validationSchema: validationSchema,
     onSubmit: async (values) => {
       const res = await fetch("http://localhost:4000/register", { 
         method: "POST",
@@ -91,7 +91,7 @@ export default function Home() {
     initialValues: {
       message: "",
     },
-    validate: Yup.object({
+    validationSchema: Yup.object({
       message: Yup.string().required('Message is required'),
     }),
     onSubmit: (values) => {
@@ -106,7 +106,7 @@ export default function Home() {
       email: "",
       password: "",
     },
-    validate: validationSchema,
+    validationSchema: validationSchema,
     onSubmit: async (values) => {
       const res = await fetch("http://localhost:4000/users", {
         method: "PATCH",
@@ -129,7 +129,7 @@ export default function Home() {
       email: "",
       password: "",
     },
-    validate: validationSchema,
+    validationSchema: validationSchema,
     onSubmit: async (values) => {
       const res = await fetch("http://localhost:4000/users", {
         method: "DELETE",
