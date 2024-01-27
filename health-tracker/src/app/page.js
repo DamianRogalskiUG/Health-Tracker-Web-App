@@ -1,7 +1,10 @@
 'use client'
+import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { useFormik } from "formik";
 import Cookie from "js-cookie";
+import mqtt from "mqtt";
+import { toast } from "react-toastify";
 
 
 export default function Home() {
@@ -22,6 +25,7 @@ export default function Home() {
         const data = await res.json();
         Cookie.set("token", data.token);
         alert('Zalogowano');
+        client.publish('user/login', 'User logged in successfully', { qos: 0, retain: false });
       }
     },
   });
@@ -43,10 +47,68 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         alert('Zarejestrowano');
+        client.publish('user/register', 'User registered in successfully', { qos: 0, retain: false });
 
       }
     },
   });
+
+  const [client, setClient] = useState(null);
+
+  useEffect(() => {
+    const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
+    const host = 'ws://broker.emqx.io:8083/mqtt';
+    const options = {
+      keepalive: 60,
+      clientId: clientId,
+      protocolId: 'MQTT',
+      protocolVersion: 4,
+      clean: true,
+      reconnectPeriod: 1000,
+      connectTimeout: 30 * 1000,
+      will: {
+        topic: 'WillMsg',
+        payload: 'Connection Closed abnormally..!',
+        qos: 0,
+        retain: false
+      },
+    };
+
+    console.log('Connecting mqtt client');
+    const client = mqtt.connect(host, options);
+
+    client.on('error', (err) => {
+      console.log('Connection error: ', err);
+      client.end();
+    });
+
+    client.on('reconnect', () => {
+      console.log('Reconnecting...');
+    });
+
+    client.on('connect', () => {
+      console.log(`Client connected: ${clientId}`);
+      
+      client.subscribe('user/login', { qos: 0 });
+      client.subscribe('user/register', { qos: 0 });
+    });
+
+    client.on('message', (topic, message, packet) => {
+      console.log(`Received Message: ${message.toString()} On topic: ${topic}`);
+
+      if (topic === 'user/login') {
+        toast.success('Logged in successfully');
+      } else if (topic === 'user/register') {
+        toast.success('Registered successfully');
+      }
+    });
+
+    setClient(client);
+    return () => {
+      console.log('Disconnecting mqtt client');
+      client.end();
+    };
+  }, []);
 
   return (
     <>
@@ -134,6 +196,7 @@ export default function Home() {
 
         <button type="submit">Submit</button>
       </form>
+
     </>
   );
 }

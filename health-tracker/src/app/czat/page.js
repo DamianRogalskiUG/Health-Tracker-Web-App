@@ -7,34 +7,32 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState('');
   const [client, setClient] = useState(null);
 
-  useEffect(() => {
-    const mqttClient = mqtt.connect('ws://localhost:1883'); // Adres serwera MQTT
+  // useEffect(() => {
+  //   const mqttClient = mqtt.connect('mqtt://localhost:1883'); 
+  //   mqttClient.on('connect', () => {
+  //     console.log('Connected to MQTT broker');
+  //     setClient(mqttClient);
 
-    mqttClient.on('connect', () => {
-      console.log('Connected to MQTT broker');
-      setClient(mqttClient);
+  //     mqttClient.subscribe('chat');
+  //   });
 
-      // Subskrybuj kanał czatu
-      mqttClient.subscribe('chat');
-    });
+  //   mqttClient.on('message', (topic, message) => {
+  //     const newMessages = [...messages, message.toString()];
+  //     setMessages(newMessages);
+  //   });
 
-    mqttClient.on('message', (topic, message) => {
-      const newMessages = [...messages, message.toString()];
-      setMessages(newMessages);
-    });
-
-    return () => {
-      if (client) {
-        client.end();
-      }
-    };
-  }, [messages, client]);
+  //   return () => {
+  //     if (client) {
+  //       client.end();
+  //     }
+  //   };
+  // }, [messages, client]);
 
   const sendMessage = () => {
-    if (client) {
-      client.publish('chat', newMessage);
-      setNewMessage('');
-    }
+    // if (client) {
+    //   client.publish('chat', newMessage);
+    //   setNewMessage('');
+    // }
   };
 
   return (
