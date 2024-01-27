@@ -244,7 +244,7 @@ app.get('/targets', async (req, res) => {
             res.json(result);
         } else {
             const result = await db.collection('targets').find({
-                name: name
+                name: { $regex: new RegExp(name), $options: 'i'}
             }).toArray();
             console.log(result);
             res.json(result);
