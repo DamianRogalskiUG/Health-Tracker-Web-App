@@ -147,16 +147,23 @@ app.delete('/users', async (req, res) => {
 
 app.get('/measurements', async (req, res) => {
     try {
-        const client = await connect();
-        const db = client.db("health_tracker");
-        const result = await db.collection('measurements').find({}).toArray();
-        console.log(result);
-        res.json(result);
-        
+      const client = await connect();
+      const db = client.db('health_tracker');
+      
+      const email = req.query.email;
+  
+      if (!email) {
+        return res.status(400).json({ error: 'Email is required in the query parameters' });
+      }
+        const result = await db.collection('measurements').find({ email }).toArray();
+      
+      console.log(result);
+      res.json(result);
     } catch (error) {
-        console.log(error)
-    } 
-});
+      console.log(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
 
 app.post('/measurements', async (req, res) => {
     try {
