@@ -5,14 +5,20 @@ import { useFormik } from "formik";
 import Cookie from "js-cookie";
 import mqtt from "mqtt";
 import { toast } from "react-toastify";
-
+import * as yup from "yup";
 
 export default function Home() {
+  const validationSchema = Yup.object({
+    email: Yup.string().email('Invalid email address').required('Email is required'),
+    password: Yup.string().required('Password is required'),
+  });
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
+    validate: validationSchema,
     onSubmit: async (values) => {
       const res = await fetch("http://localhost:4000/login", { 
         method: "POST",
@@ -39,6 +45,7 @@ export default function Home() {
       password: "",
       passwordConfirm: "",
     },
+    validate: validationSchema,
     onSubmit: async (values) => {
       const res = await fetch("http://localhost:4000/register", { 
         method: "POST",
@@ -84,6 +91,9 @@ export default function Home() {
     initialValues: {
       message: "",
     },
+    validate: Yup.object({
+      message: Yup.string().required('Message is required'),
+    }),
     onSubmit: (values) => {
       if (client) {
         client.publish('chat/messages', JSON.stringify({ user, message: values.message }), { qos: 0, retain: false });
@@ -96,6 +106,7 @@ export default function Home() {
       email: "",
       password: "",
     },
+    validate: validationSchema,
     onSubmit: async (values) => {
       const res = await fetch("http://localhost:4000/users", {
         method: "PATCH",
@@ -118,6 +129,7 @@ export default function Home() {
       email: "",
       password: "",
     },
+    validate: validationSchema,
     onSubmit: async (values) => {
       const res = await fetch("http://localhost:4000/users", {
         method: "DELETE",
@@ -219,6 +231,7 @@ export default function Home() {
   return (
     <>
       <h1>Health Tracker</h1>
+      <h1>User</h1>
       <h2>Login</h2>
       <form onSubmit={formik.handleSubmit}>
         <div>
@@ -411,6 +424,7 @@ export default function Home() {
           <button type="submit">Submit</button>
         </form>
       </div>
+
     </>
   );
 }
