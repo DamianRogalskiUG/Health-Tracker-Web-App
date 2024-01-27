@@ -18,8 +18,30 @@ export default function Home() {
   const [user, setUser] = useState(null);
   const [chatMessages, setChatMessages] = useState([]);
   const [users, setUsers] = useState([]);
+  const [notifications, setNotifications] = useState([]);
 
   
+    const addNotification = (message, type) => {
+      const newNotification = { id: Date.now(), message, type };
+      setNotifications((prevNotifications) => [...prevNotifications, newNotification]);
+    };
+  
+    const removeNotification = (id) => {
+      setNotifications((prevNotifications) => prevNotifications.filter(notification => notification.id !== id));
+    };
+    useEffect(() => {
+    const simulatedNotification = {
+      id: Date.now(),
+      message: "New notification received!",
+      type: "info",
+    };
+
+    const notificationTimeout = setTimeout(() => {
+      addNotification(simulatedNotification.message, simulatedNotification.type);
+    }, 3000);
+
+    return () => clearTimeout(notificationTimeout);
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -454,7 +476,17 @@ export default function Home() {
           </div>
           <button type="submit">Submit</button>
         </form>
-
+        <div className="notification-tab">
+          <h2>Notifications</h2>
+          <ul>
+            {notifications.map((notification) => (
+              <li key={notification.id} className={`notification ${notification.type}`}>
+                <span>{notification.message}</span>
+                <button onClick={() => removeNotification(notification.id)}>Close</button>
+              </li>
+            ))}
+          </ul>
+        </div>
     </>
   );
 }
