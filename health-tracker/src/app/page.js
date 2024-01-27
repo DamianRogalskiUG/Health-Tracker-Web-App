@@ -31,8 +31,8 @@ export default function Home() {
         const data = await res.json();
         Cookie.set("token", data.token);
         alert('Zalogowano');
-        client.publish('user/login', 'User logged in successfully', { qos: 0, retain: false });
         setUser(data);
+        client.publish('user/login', 'User logged in successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd logowania');
       }
@@ -163,6 +163,7 @@ export default function Home() {
       client.on('message', (topic, message) => {
         if (topic === 'chat/messages') {
           const newMessage = JSON.parse(message.toString());
+          console.log(newMessage)
           setChatMessages((prevMessages) => [...prevMessages, newMessage]);
         }
       });
@@ -324,19 +325,19 @@ export default function Home() {
         <div className={styles.disconnected}>User is Disconnected</div>
       )
       }
-            <h2>Chat</h2>
+      <h2>Chat</h2>
       <div className={styles.chatContainer}>
         <div className={styles.chatMessages}>
           {chatMessages.map((msg, index) => (
             <div key={index} className={styles.chatMessage}>
-              {user === null ? (
+              {msg.user === null ? (
               <>
-              <strong>Anonim user</strong> {msg.message}
+              <strong>hej</strong> {msg.message}
               </>
               ) : (
-              <>
-              <strong>{msg.user.user.email}</strong> {msg.message}
-              </>
+                <>
+                <strong>{msg.user.user.email}</strong> {msg.message}
+                </>
               )}
 
             </div>
