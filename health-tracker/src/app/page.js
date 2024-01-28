@@ -13,7 +13,7 @@ import io from 'socket.io-client';
 export default function Home() {
 
   const socket = io('http://localhost:4000');
-  
+
   useEffect(() => {
     socket.on('chatMessage', (data) => {
       setHttpChatMessages((prevMessages) => [...prevMessages, data]);
@@ -631,7 +631,7 @@ export default function Home() {
 
 
   useEffect(() => {
-    const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
+    const clientId = 'mqttjs_' + Math.random().toString(16)
     const host = 'ws://broker.emqx.io:8083/mqtt';
     const options = {
       keepalive: 60,
@@ -746,7 +746,7 @@ export default function Home() {
       console.log('Disconnecting mqtt client');
       client.end();
     };
-  }, [setUser]);
+  }, []);
 
   return (
     <>

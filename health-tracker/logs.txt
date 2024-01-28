@@ -4635,3 +4635,318 @@
 2024-01-28T23:30:48.704Z - User disconnected
 2024-01-28T23:30:48.704Z - User disconnected
 2024-01-28T23:30:48.704Z - User disconnected
+2024-01-28T23:31:26.886Z - A user connected
+2024-01-28T23:31:26.888Z - A user connected
+2024-01-28T23:31:26.902Z - User disconnected
+2024-01-28T23:31:26.902Z - User disconnected
+2024-01-28T23:31:26.902Z - User disconnected
+2024-01-28T23:31:26.902Z - User disconnected
+2024-01-28T23:31:26.902Z - User disconnected
+2024-01-28T23:31:26.903Z - User disconnected
+2024-01-28T23:31:26.903Z - User disconnected
+2024-01-28T23:31:26.903Z - User disconnected
+2024-01-28T23:31:26.903Z - User disconnected
+2024-01-28T23:31:26.903Z - User disconnected
+2024-01-28T23:31:26.903Z - User disconnected
+2024-01-28T23:31:26.903Z - User disconnected
+2024-01-28T23:31:26.903Z - User disconnected
+2024-01-28T23:31:26.903Z - User disconnected
+2024-01-28T23:31:26.903Z - User disconnected
+2024-01-28T23:31:26.904Z - User disconnected
+2024-01-28T23:31:26.904Z - User disconnected
+2024-01-28T23:31:26.904Z - User disconnected
+2024-01-28T23:31:26.904Z - User disconnected
+2024-01-28T23:31:26.904Z - User disconnected
+2024-01-28T23:31:26.904Z - User disconnected
+2024-01-28T23:31:26.904Z - User disconnected
+2024-01-28T23:31:26.904Z - User disconnected
+2024-01-28T23:31:26.904Z - User disconnected
+2024-01-28T23:31:26.904Z - User disconnected
+2024-01-28T23:31:26.904Z - User disconnected
+2024-01-28T23:31:26.905Z - User disconnected
+2024-01-28T23:31:26.905Z - User disconnected
+2024-01-28T23:31:26.925Z - User disconnected
+2024-01-28T23:31:26.925Z - User disconnected
+2024-01-28T23:31:26.925Z - User disconnected
+2024-01-28T23:31:26.926Z - User disconnected
+2024-01-28T23:31:26.926Z - User disconnected
+2024-01-28T23:31:26.926Z - User disconnected
+2024-01-28T23:31:26.926Z - User disconnected
+2024-01-28T23:31:26.927Z - User disconnected
+2024-01-28T23:31:26.928Z - User disconnected
+2024-01-28T23:31:26.928Z - User disconnected
+2024-01-28T23:31:26.928Z - User disconnected
+2024-01-28T23:31:26.928Z - User disconnected
+2024-01-28T23:31:26.928Z - User disconnected
+2024-01-28T23:31:26.928Z - User disconnected
+2024-01-28T23:31:26.930Z - User disconnected
+2024-01-28T23:31:26.933Z - User disconnected
+2024-01-28T23:31:26.934Z - User disconnected
+2024-01-28T23:31:26.934Z - User disconnected
+2024-01-28T23:31:26.934Z - User disconnected
+2024-01-28T23:31:26.942Z - User disconnected
+2024-01-28T23:31:26.943Z - User disconnected
+2024-01-28T23:31:26.943Z - User disconnected
+2024-01-28T23:31:26.943Z - User disconnected
+2024-01-28T23:31:26.944Z - User disconnected
+2024-01-28T23:31:26.944Z - User disconnected
+2024-01-28T23:31:26.944Z - User disconnected
+2024-01-28T23:31:26.944Z - User disconnected
+2024-01-28T23:31:26.944Z - User disconnected
+2024-01-28T23:31:26.944Z - User disconnected
+2024-01-28T23:31:26.944Z - User disconnected
+2024-01-28T23:31:26.945Z - User disconnected
+2024-01-28T23:31:26.945Z - User disconnected
+2024-01-28T23:31:26.945Z - User disconnected
+2024-01-28T23:31:26.945Z - User disconnected
+2024-01-28T23:31:26.946Z - User disconnected
+2024-01-28T23:31:26.946Z - User disconnected
+2024-01-28T23:31:26.946Z - User disconnected
+2024-01-28T23:31:26.946Z - User disconnected
+2024-01-28T23:31:26.947Z - User disconnected
+2024-01-28T23:31:26.947Z - User disconnected
+2024-01-28T23:31:26.947Z - User disconnected
+2024-01-28T23:31:26.947Z - User disconnected
+2024-01-28T23:31:26.947Z - User disconnected
+2024-01-28T23:31:26.947Z - User disconnected
+2024-01-28T23:31:27.566Z - A user connected
+2024-01-28T23:31:27.571Z - A user connected
+2024-01-28T23:31:27.595Z - GET /messages
+2024-01-28T23:31:27.665Z - GET /messages
+2024-01-28T23:31:27.684Z - A user connected
+2024-01-28T23:31:27.692Z - A user connected
+2024-01-28T23:31:27.699Z - A user connected
+2024-01-28T23:31:27.702Z - A user connected
+2024-01-28T23:31:28.718Z - A user connected
+2024-01-28T23:31:28.731Z - A user connected
+2024-01-28T23:31:28.766Z - GET /messages
+2024-01-28T23:31:28.826Z - GET /messages
+2024-01-28T23:31:28.860Z - A user connected
+2024-01-28T23:31:28.868Z - A user connected
+2024-01-28T23:31:28.962Z - A user connected
+2024-01-28T23:31:28.967Z - A user connected
+2024-01-28T23:32:48.613Z - Server is running on port 4000
+2024-01-28T23:32:48.679Z - A user connected
+2024-01-28T23:32:49.080Z - A user connected
+2024-01-28T23:32:49.172Z - A user connected
+2024-01-28T23:32:49.181Z - A user connected
+2024-01-28T23:32:49.226Z - A user connected
+2024-01-28T23:32:49.277Z - A user connected
+2024-01-28T23:32:49.319Z - A user connected
+2024-01-28T23:32:49.531Z - A user connected
+2024-01-28T23:32:49.561Z - A user connected
+2024-01-28T23:32:49.567Z - A user connected
+2024-01-28T23:32:49.572Z - A user connected
+2024-01-28T23:32:49.616Z - A user connected
+2024-01-28T23:32:49.670Z - A user connected
+2024-01-28T23:32:49.837Z - A user connected
+2024-01-28T23:32:49.848Z - A user connected
+2024-01-28T23:32:49.907Z - A user connected
+2024-01-28T23:32:49.979Z - A user connected
+2024-01-28T23:32:50.270Z - A user connected
+2024-01-28T23:32:59.289Z - A user connected
+2024-01-28T23:32:59.301Z - User disconnected
+2024-01-28T23:32:59.301Z - User disconnected
+2024-01-28T23:32:59.301Z - User disconnected
+2024-01-28T23:32:59.301Z - User disconnected
+2024-01-28T23:32:59.301Z - User disconnected
+2024-01-28T23:32:59.301Z - User disconnected
+2024-01-28T23:32:59.301Z - User disconnected
+2024-01-28T23:32:59.301Z - User disconnected
+2024-01-28T23:32:59.792Z - A user connected
+2024-01-28T23:32:59.808Z - A user connected
+2024-01-28T23:32:59.824Z - GET /messages
+2024-01-28T23:32:59.896Z - GET /messages
+2024-01-28T23:32:59.912Z - A user connected
+2024-01-28T23:32:59.918Z - A user connected
+2024-01-28T23:32:59.925Z - A user connected
+2024-01-28T23:32:59.931Z - A user connected
+2024-01-28T23:34:11.796Z - Server is running on port 4000
+2024-01-28T23:34:12.413Z - A user connected
+2024-01-28T23:34:12.579Z - A user connected
+2024-01-28T23:34:12.756Z - A user connected
+2024-01-28T23:34:12.763Z - A user connected
+2024-01-28T23:34:12.865Z - A user connected
+2024-01-28T23:34:12.906Z - A user connected
+2024-01-28T23:34:13.102Z - A user connected
+2024-01-28T23:34:13.204Z - A user connected
+2024-01-28T23:34:13.270Z - A user connected
+2024-01-28T23:34:13.367Z - A user connected
+2024-01-28T23:34:13.465Z - A user connected
+2024-01-28T23:34:13.516Z - A user connected
+2024-01-28T23:34:13.577Z - A user connected
+2024-01-28T23:34:13.586Z - A user connected
+2024-01-28T23:34:13.602Z - A user connected
+2024-01-28T23:34:13.616Z - A user connected
+2024-01-28T23:34:13.652Z - A user connected
+2024-01-28T23:34:13.699Z - A user connected
+2024-01-28T23:34:13.701Z - A user connected
+2024-01-28T23:34:13.717Z - A user connected
+2024-01-28T23:34:13.718Z - A user connected
+2024-01-28T23:34:13.751Z - A user connected
+2024-01-28T23:34:13.792Z - A user connected
+2024-01-28T23:34:19.543Z - A user connected
+2024-01-28T23:34:19.550Z - User disconnected
+2024-01-28T23:34:19.550Z - User disconnected
+2024-01-28T23:34:19.551Z - User disconnected
+2024-01-28T23:34:19.551Z - User disconnected
+2024-01-28T23:34:19.551Z - User disconnected
+2024-01-28T23:34:19.551Z - User disconnected
+2024-01-28T23:34:19.551Z - User disconnected
+2024-01-28T23:34:19.551Z - User disconnected
+2024-01-28T23:34:19.551Z - User disconnected
+2024-01-28T23:34:20.013Z - A user connected
+2024-01-28T23:34:20.018Z - A user connected
+2024-01-28T23:34:20.032Z - GET /messages
+2024-01-28T23:34:20.105Z - GET /messages
+2024-01-28T23:34:20.121Z - A user connected
+2024-01-28T23:34:20.122Z - A user connected
+2024-01-28T23:34:20.128Z - A user connected
+2024-01-28T23:34:20.130Z - A user connected
+2024-01-28T23:34:22.940Z - A user connected
+2024-01-28T23:34:22.953Z - User disconnected
+2024-01-28T23:34:22.955Z - User disconnected
+2024-01-28T23:34:22.955Z - User disconnected
+2024-01-28T23:34:22.956Z - User disconnected
+2024-01-28T23:34:22.956Z - User disconnected
+2024-01-28T23:34:22.957Z - User disconnected
+2024-01-28T23:34:22.957Z - User disconnected
+2024-01-28T23:34:22.957Z - User disconnected
+2024-01-28T23:34:22.957Z - User disconnected
+2024-01-28T23:34:22.957Z - User disconnected
+2024-01-28T23:34:22.957Z - User disconnected
+2024-01-28T23:34:23.399Z - A user connected
+2024-01-28T23:34:23.400Z - A user connected
+2024-01-28T23:34:23.415Z - GET /messages
+2024-01-28T23:34:23.471Z - GET /messages
+2024-01-28T23:34:23.497Z - A user connected
+2024-01-28T23:34:23.499Z - A user connected
+2024-01-28T23:34:23.510Z - A user connected
+2024-01-28T23:34:23.514Z - A user connected
+2024-01-28T23:35:05.787Z - A user connected
+2024-01-28T23:35:05.796Z - User disconnected
+2024-01-28T23:35:05.796Z - User disconnected
+2024-01-28T23:35:05.797Z - User disconnected
+2024-01-28T23:35:05.797Z - User disconnected
+2024-01-28T23:35:05.797Z - User disconnected
+2024-01-28T23:35:05.797Z - User disconnected
+2024-01-28T23:35:06.190Z - A user connected
+2024-01-28T23:35:06.198Z - A user connected
+2024-01-28T23:35:06.208Z - GET /messages
+2024-01-28T23:35:06.267Z - GET /messages
+2024-01-28T23:35:06.288Z - A user connected
+2024-01-28T23:35:06.294Z - A user connected
+2024-01-28T23:35:06.303Z - A user connected
+2024-01-28T23:35:06.311Z - A user connected
+2024-01-28T23:35:11.120Z - A user connected
+2024-01-28T23:35:11.129Z - User disconnected
+2024-01-28T23:35:11.130Z - User disconnected
+2024-01-28T23:35:11.130Z - User disconnected
+2024-01-28T23:35:11.130Z - User disconnected
+2024-01-28T23:35:11.130Z - User disconnected
+2024-01-28T23:35:11.130Z - User disconnected
+2024-01-28T23:35:11.598Z - A user connected
+2024-01-28T23:35:11.604Z - A user connected
+2024-01-28T23:35:11.629Z - GET /messages
+2024-01-28T23:35:11.692Z - GET /messages
+2024-01-28T23:35:11.711Z - A user connected
+2024-01-28T23:35:11.718Z - A user connected
+2024-01-28T23:35:11.726Z - A user connected
+2024-01-28T23:35:11.729Z - A user connected
+2024-01-28T23:35:16.222Z - A user connected
+2024-01-28T23:35:16.233Z - A user connected
+2024-01-28T23:35:16.237Z - A user connected
+2024-01-28T23:35:16.240Z - A user connected
+2024-01-28T23:35:16.319Z - A user connected
+2024-01-28T23:35:16.322Z - A user connected
+2024-01-28T23:35:16.327Z - A user connected
+2024-01-28T23:35:16.329Z - A user connected
+2024-01-28T23:35:16.498Z - A user connected
+2024-01-28T23:35:16.501Z - A user connected
+2024-01-28T23:35:16.505Z - A user connected
+2024-01-28T23:35:16.507Z - A user connected
+2024-01-28T23:35:16.717Z - A user connected
+2024-01-28T23:35:16.720Z - A user connected
+2024-01-28T23:35:16.723Z - A user connected
+2024-01-28T23:35:16.729Z - A user connected
+2024-01-28T23:35:17.212Z - A user connected
+2024-01-28T23:35:17.215Z - A user connected
+2024-01-28T23:35:17.223Z - A user connected
+2024-01-28T23:35:17.227Z - A user connected
+2024-01-28T23:35:17.518Z - A user connected
+2024-01-28T23:35:17.534Z - POST /messages Anonim hej
+2024-01-28T23:35:17.536Z - A user connected
+2024-01-28T23:35:17.536Z - A user connected
+2024-01-28T23:35:17.537Z - A user connected
+2024-01-28T23:35:17.552Z - A user connected
+2024-01-28T23:35:17.563Z - A user connected
+2024-01-28T23:35:17.569Z - A user connected
+2024-01-28T23:35:17.639Z - A user connected
+2024-01-28T23:35:17.651Z - A user connected
+2024-01-28T23:35:17.661Z - A user connected
+2024-01-28T23:35:57.565Z - A user connected
+2024-01-28T23:35:57.572Z - User disconnected
+2024-01-28T23:35:57.574Z - User disconnected
+2024-01-28T23:35:57.574Z - User disconnected
+2024-01-28T23:35:57.574Z - User disconnected
+2024-01-28T23:35:57.574Z - User disconnected
+2024-01-28T23:35:57.575Z - User disconnected
+2024-01-28T23:35:57.575Z - User disconnected
+2024-01-28T23:35:57.575Z - User disconnected
+2024-01-28T23:35:57.575Z - User disconnected
+2024-01-28T23:35:57.575Z - User disconnected
+2024-01-28T23:35:57.575Z - User disconnected
+2024-01-28T23:35:57.575Z - User disconnected
+2024-01-28T23:35:57.575Z - User disconnected
+2024-01-28T23:35:57.575Z - User disconnected
+2024-01-28T23:35:57.575Z - User disconnected
+2024-01-28T23:35:57.575Z - User disconnected
+2024-01-28T23:35:57.575Z - User disconnected
+2024-01-28T23:35:57.576Z - User disconnected
+2024-01-28T23:35:57.576Z - User disconnected
+2024-01-28T23:35:57.576Z - User disconnected
+2024-01-28T23:35:57.576Z - User disconnected
+2024-01-28T23:35:57.576Z - User disconnected
+2024-01-28T23:35:57.576Z - User disconnected
+2024-01-28T23:35:57.576Z - User disconnected
+2024-01-28T23:35:57.577Z - User disconnected
+2024-01-28T23:35:57.577Z - User disconnected
+2024-01-28T23:35:57.578Z - User disconnected
+2024-01-28T23:35:57.578Z - User disconnected
+2024-01-28T23:35:57.578Z - User disconnected
+2024-01-28T23:35:57.578Z - User disconnected
+2024-01-28T23:35:57.578Z - User disconnected
+2024-01-28T23:35:57.578Z - User disconnected
+2024-01-28T23:35:57.578Z - User disconnected
+2024-01-28T23:35:57.578Z - User disconnected
+2024-01-28T23:35:57.977Z - A user connected
+2024-01-28T23:35:57.984Z - A user connected
+2024-01-28T23:35:58.003Z - GET /messages
+2024-01-28T23:35:58.061Z - GET /messages
+2024-01-28T23:35:58.082Z - A user connected
+2024-01-28T23:35:58.085Z - A user connected
+2024-01-28T23:35:58.096Z - A user connected
+2024-01-28T23:35:58.099Z - A user connected
+2024-01-28T23:36:22.408Z - Server is running on port 4000
+2024-01-28T23:36:24.669Z - User disconnected
+2024-01-28T23:36:24.673Z - User disconnected
+2024-01-28T23:36:24.673Z - User disconnected
+2024-01-28T23:36:24.674Z - User disconnected
+2024-01-28T23:36:24.675Z - User disconnected
+2024-01-28T23:36:24.683Z - User disconnected
+2024-01-28T23:36:25.066Z - GET /messages
+2024-01-28T23:36:25.126Z - GET /messages
+2024-01-28T23:36:26.527Z - User disconnected
+2024-01-28T23:36:26.527Z - User disconnected
+2024-01-28T23:36:26.528Z - User disconnected
+2024-01-28T23:36:26.528Z - User disconnected
+2024-01-28T23:36:26.528Z - User disconnected
+2024-01-28T23:36:26.529Z - User disconnected
+2024-01-28T23:36:26.529Z - User disconnected
+2024-01-28T23:36:26.530Z - User disconnected
+2024-01-28T23:36:27.008Z - GET /messages
+2024-01-28T23:36:27.083Z - GET /messages
+2024-01-28T23:36:38.003Z - user logged [object Object]
+2024-01-28T23:36:42.287Z - POST /messages t3@t3.com hej
+2024-01-28T23:36:54.175Z - user logged [object Object]
+2024-01-28T23:36:57.419Z - POST /messages t4@t4.com hej
