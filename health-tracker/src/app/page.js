@@ -21,7 +21,7 @@ export default function Home() {
   const [notifications, setNotifications] = useState([]);
   const [measurements, setMeasurements] = useState([]);
   const [targets, setTargets] = useState([]);
-
+  const [activities, setActivities] = useState([]);
   
     const addNotification = (message, type) => {
       const newNotification = { id: Date.now(), message, type };
@@ -319,7 +319,7 @@ export default function Home() {
         const data = await res.json();
         alert("Pobrano cele");
         setTargets(data);
-        client.publish('user/targetsGet', 'User got targets successfully', { qos: 0, retain: false });
+        client.publish('user/targetsGet', 'User got the target successfully', { qos: 0, retain: false });
 
       } else {
         alert('Błąd przy pobieraniu celów');
@@ -347,7 +347,7 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         alert("Dodano cele");
-        client.publish('user/targetsPost', 'User added targets successfully', { qos: 0, retain: false });
+        client.publish('user/targetsPost', 'User added the target successfully', { qos: 0, retain: false });
         
       } else {
         alert('Błąd przy dodawaniu celów');
@@ -374,10 +374,54 @@ export default function Home() {
       });
       if (res.ok) {
         alert("Zmieniono cele");
-        client.publish('user/targetsPatch', 'User updated targets successfully', { qos: 0, retain: false });
+        client.publish('user/targetsPatch', 'User updated the target successfully', { qos: 0, retain: false });
 
       } else {
         alert('Błąd przy zmianie celów');
+      }
+    }
+  });
+
+  const formikDeleteTargets = useFormik({
+    initialValues: {
+      name: "",
+    },
+    onSubmit: async (values) => {
+      const res = await fetch(`http://localhost:4000/targets`, {
+        method: "DELETE",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        alert("Usunięto cele");
+        client.publish('user/targetsDelete', 'User deleted a target successfully', { qos: 0, retain: false });
+
+      } else {
+        alert('Błąd przy usuwaniu celów');
+      }
+    }
+  });
+
+  const formikGetActivities = useFormik({
+    initialValues: {
+      name: "",
+    },
+    onSubmit: async (values) => {
+      const res = await fetch(`http://localhost:4000/activities?name=${values.name}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        alert("Pobrano aktywności");
+        setActivities(data);
+        client.publish('user/activitiesGet', 'User got the activities successfully', { qos: 0, retain: false });
+      } else {
+        alert('Błąd przy pobieraniu aktywności');
       }
     }
   });
@@ -456,6 +500,8 @@ export default function Home() {
       client.subscribe('user/targetsGet', { qos: 0 });
       client.subscribe('user/targetsPost', { qos: 0 });
       client.subscribe('user/targetsPatch', { qos: 0 });
+      client.subscribe('user/targetsDelete', { qos: 0 });
+      client.subscribe('user/activitiesGet', { qos: 0 });
     });
 
     client.on('message', (topic, message, packet) => {
@@ -487,6 +533,10 @@ export default function Home() {
         toast.success('Added targets successfully');
       } else if (topic === 'user/targetsPatch') {
         toast.success('Updated targets successfully');
+      } else if (topic === 'user/targetsDelete') {
+        toast.success('Deleted targets successfully');
+      } else if (topic === 'user/activitiesGet') {
+        toast.success('Got activities successfully');
       }
     });
 
@@ -920,6 +970,49 @@ export default function Home() {
             <button type="submit">Change targets</button>
           </form>
           
+        <h2>Delete targets</h2>
+          <form onSubmit={formikDeleteTargets.handleSubmit}>
+            <div>
+              <label htmlFor="name">Name</label>
+              <input
+                type="name"
+                id="name"
+                name="name"
+                onChange={formikDeleteTargets.handleChange}
+                value={formikDeleteTargets.values.name}
+              />
+              {formikDeleteTargets.errors.name ? (
+                <div className={styles.error}>{formikDeleteTargets.errors.name}</div>
+              ) : null}
+            </div>
+            <button type="submit">Delete targets</button>
+          </form>
+
+          <h1>Activities</h1>
+          <h2>Get activities</h2>
+          <form onSubmit={formikGetActivities.handleSubmit}>
+            <div>
+              <label htmlFor="name">Name</label>
+              <input
+                type="name"
+                id="name"
+                name="name"
+                onChange={formikGetActivities.handleChange}
+                value={formikGetActivities.values.name}
+              />
+            </div>
+            <button type="submit">Get activities</button>
+          </form>
+          {activities && activities.length > 0  && (
+            <div className={styles.activities}>
+              {activities.map((activity, index) => (
+                <div key={index} className={styles.activity}>
+                  <span>{activity.name}</span>
+                  <span>{activity.desc}</span>
+                </div>
+              ))}
+            </div>
+          )}
     </>
   );
 }

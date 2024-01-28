@@ -235,7 +235,7 @@ app.patch('/measurements', async (req, res) => {
 
 app.get('/targets', async (req, res) => {
     try {
-        const { name } = req.query.name;
+        const name = req.query.name;
         const client = await connect();
         const db = client.db("health_tracker");
         if (!name) {
@@ -270,9 +270,12 @@ app.post('/targets', async (req, res) => {
 
 app.delete('/targets', async (req, res) => {
     try {
+        const { name } = req.body;
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('targets').deleteOne(req.body);
+        const result = await db.collection('targets').deleteOne(
+            { name: name }
+        );
         console.log(result);
         res.json(result);
         
@@ -300,11 +303,20 @@ app.patch('/targets', async (req, res) => {
 
 app.get('/activities', async (req, res) => {
     try {
+        const name = req.query.name;
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('activities').find({}).toArray();
-        console.log(result);
-        res.json(result);
+        if (!name) {
+            const result = await db.collection('activities').find({}).toArray();
+            console.log(result);
+            res.json(result);
+        } else {
+            const result = await db.collection('activities').find({
+                name: { $regex: new RegExp(name), $options: 'i'}
+            }).toArray();
+            console.log(result);
+            res.json(result);
+        }
         
     } catch (error) {
         console.log(error)
