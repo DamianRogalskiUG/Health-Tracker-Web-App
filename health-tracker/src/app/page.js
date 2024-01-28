@@ -6,9 +6,24 @@ import Cookie from "js-cookie";
 import mqtt from "mqtt";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import io from 'socket.io-client';
+
 
 
 export default function Home() {
+
+  const socket = io('http://localhost:4000');
+  
+  useEffect(() => {
+    socket.on('chatMessage', (data) => {
+      setHttpChatMessages((prevMessages) => [...prevMessages, data]);
+    });
+
+    return () => {
+      socket.off('chatMessage');
+    };
+  }, []);
+
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -39,23 +54,24 @@ export default function Home() {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-
         const res = await fetch("http://localhost:4000/messages", { 
           method: "POST",
-          body: JSON.stringify(
-            {
-              message: values.message,
-              user: email || "Anonim",
-            }
-          ),
+          body: JSON.stringify({
+            message: values.message,
+            user: email || "Anonim",
+          }),
           headers: {
             "Content-Type": "application/json",
           },
         });
+    
         if (res.ok) {
           const data = await res.json();
-          setHttpChatMessages((prevMessages) => [...prevMessages, data]);
           resetForm();
+          socket.emit('chatMessage', {
+            message: values.message,
+            user: email || 'Anonim',
+          });
         } else {
           alert('Błąd przy wysyłaniu wiadomości');
         }
@@ -65,24 +81,23 @@ export default function Home() {
     },
   });
 
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const res = await fetch("http://localhost:4000/messages");
-        if (res.ok) {
-          const data = await res.json();
-          setHttpChatMessages(data);
-        } else {
-          console.error('Błąd przy pobieraniu wiadomości');
-        }
-      } catch (error) {
-        console.error('Błąd przy pobieraniu wiadomości:', error);
+  const fetchMessages = async () => {
+    try {
+      const res = await fetch("http://localhost:4000/messages");
+      if (res.ok) {
+        const data = await res.json();
+        setHttpChatMessages((prevMessages) => [...prevMessages, data]);
+      } else {
+        console.error('Błąd przy pobieraniu wiadomości');
       }
-    };
+    } catch (error) {
+      console.error('Błąd przy pobieraniu wiadomości:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchMessages();
-
-  }, []); 
+  }, []);
 
 
   const formik = useFormik({
@@ -206,6 +221,7 @@ export default function Home() {
         const data = await res.json();
         alert('Zmieniono dane');
         setUser(data);
+        resetForm();
         client.publish('user/updateUser', 'User updated the account successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd zmiany danych');

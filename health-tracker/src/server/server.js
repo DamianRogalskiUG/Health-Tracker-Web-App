@@ -5,18 +5,21 @@ const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const mqtt = require('mqtt');
 const jwt = require('jsonwebtoken');
-const http = require("http");
-const SseChannel = require('sse-channel');
-const https = require('node:https');
 const fs = require('node:fs');
-const { ObjectId } = require('mongodb');
 const bodyParser = require('body-parser');
-
-
+const http = require('http');
 
 const app = express();
+const server = http.createServer(app);
 const port = 4000;
 const JWT_SECRET = 'secret_password';
+const io = require('socket.io')(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+});
 
 
 const chatMessages = ['test message 1', 'test message 2', 'test message 3'];
@@ -25,11 +28,34 @@ const mqttUrl = 'mqtt://localhost:1883';
 
 const mqttClient = mqtt.connect(mqttUrl);
 
-app.use(cors());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(200);
+    }
+    next();
+  });
+  
+app.use(cors({ origin: '*' }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
 
+
+io.on('connection', (socket) => {
+    console.log('A user connected');
+  
+    socket.on('disconnect', () => {
+      console.log('User disconnected');
+    });
+    socket.on('chatMessage', (data) => {
+        io.emit('chatMessage', data);
+      });
+
+  });
 
 
 const createToken = (user) => {
@@ -47,10 +73,7 @@ const logToFile = (message) => {
     logToFile(args.join(' '));
   };
 
-const dateChanel = new SseChannel();
-setInterval(() => {
-    dateChanel.send({ date: new Date().toISOString() });
-}, 1000);
+
 
 app.get('/messages', (req, res) => {
     try {
@@ -63,18 +86,19 @@ app.get('/messages', (req, res) => {
     
   });
 
-app.post('/messages', (req, res) => {
+  app.post('/messages', async (req, res) => {
     try {
-        const { user, message } = req.body;
-        console.log('POST /messages', user, message);
-        chatMessages.push({user, message});
-        res.json({user, message});
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
-      }
-
-});
+      const { user, message } = req.body;
+      console.log('POST /messages', user, message);
+      chatMessages.push({ user, message });
+    
+      res.json({ user, message });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
 
 app.get('/users', async (req, res) => {
     try {
@@ -449,6 +473,6 @@ app.patch('/activities', async (req, res) => {
     } 
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
