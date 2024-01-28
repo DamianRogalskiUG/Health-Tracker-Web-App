@@ -358,6 +358,7 @@ export default function Home() {
   const formikPatchTargets = useFormik({
     initialValues: {
       name: "",
+      newName: "",
       desc: "",
     },
     validationSchema: Yup.object({
@@ -581,6 +582,8 @@ export default function Home() {
       client.subscribe('user/targetsDelete', { qos: 0 });
       client.subscribe('user/activitiesGet', { qos: 0 });
       client.subscribe('user/activitiesPost', { qos: 0 });
+      client.subscribe('user/activitiesPatch', { qos: 0 });
+      client.subscribe('user/activitiesDelete', { qos: 0 });
     });
 
     client.on('message', (topic, message, packet) => {
@@ -618,6 +621,10 @@ export default function Home() {
         toast.success('Got activities successfully');
       } else if (topic === 'user/activitiesPost') {
         toast.success('Added activities successfully');
+      } else if (topic === 'user/activitiesPatch') {
+        toast.success('Updated activities successfully');
+      } else if (topic === 'user/activitiesDelete') {
+        toast.success('Deleted activities successfully');
       }
     });
 
@@ -1033,6 +1040,19 @@ export default function Home() {
               />
               {formikPatchTargets.errors.name ? (
                 <div className={styles.error}>{formikPatchTargets.errors.name}</div>
+              ) : null}
+            </div>
+            <div>
+              <label htmlFor="newName">New Name</label>
+              <input
+                type="newName"
+                id="newName"
+                name="newName"
+                onChange={formikPatchTargets.handleChange}
+                value={formikPatchTargets.values.newName}
+              />
+              {formikPatchTargets.errors.newName ? (
+                <div className={styles.error}>{formikPatchTargets.errors.newName}</div>
               ) : null}
             </div>
             <div>
