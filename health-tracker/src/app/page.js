@@ -327,7 +327,60 @@ export default function Home() {
     }
   });
 
+  const formikPostTargets = useFormik({
+    initialValues: {
+      name: "",
+      desc: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      desc: Yup.string().required("Required"),
+      }),
+    onSubmit: async (values) => {
+      const res = await fetch(`http://localhost:4000/targets`, {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        alert("Dodano cele");
+        client.publish('user/targetsPost', 'User added targets successfully', { qos: 0, retain: false });
+        
+      } else {
+        alert('Błąd przy dodawaniu celów');
+      }
+    }
+  });
 
+  const formikPatchTargets = useFormik({
+    initialValues: {
+      name: "",
+      desc: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      desc: Yup.string().required("Required"),
+      }),
+    onSubmit: async (values) => {
+      const res = await fetch(`http://localhost:4000/targets`, {
+        method: "PATCH",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        alert("Zmieniono cele");
+        client.publish('user/targetsPatch', 'User updated targets successfully', { qos: 0, retain: false });
+
+      } else {
+        alert('Błąd przy zmianie celów');
+      }
+    }
+  });
 
   useEffect(() => {
     if (client) {
@@ -400,6 +453,9 @@ export default function Home() {
       client.subscribe('user/measurementsPost', { qos: 0 });
       client.subscribe('user/measurementsPatch', { qos: 0 });
       client.subscribe('user/measurementsDelete', { qos: 0 });
+      client.subscribe('user/targetsGet', { qos: 0 });
+      client.subscribe('user/targetsPost', { qos: 0 });
+      client.subscribe('user/targetsPatch', { qos: 0 });
     });
 
     client.on('message', (topic, message, packet) => {
@@ -425,6 +481,12 @@ export default function Home() {
         toast.success('Updated measurements successfully');
       } else if (topic === 'user/measurementsDelete') {
         toast.success('Deleted measurements successfully');
+      } else if (topic === 'user/targetsGet') {
+        toast.success('Got targets successfully');
+      } else if (topic === 'user/targetsPost') {
+        toast.success('Added targets successfully');
+      } else if (topic === 'user/targetsPatch') {
+        toast.success('Updated targets successfully');
       }
     });
 
@@ -538,7 +600,7 @@ export default function Home() {
             <div key={index} className={styles.chatMessage}>
               {msg.user === null ? (
               <>
-              <strong>hej</strong> {msg.message}
+              <strong>Anonim</strong> {msg.message}
               </>
               ) : (
                 <>
@@ -797,6 +859,67 @@ export default function Home() {
             ))}
           </div>
         )}
+        <h2>Add targets</h2>
+          <form onSubmit={formikPostTargets.handleSubmit}>
+            <div>
+              <label htmlFor="name">Name</label>
+              <input
+                type="name"
+                id="name"
+                name="name"
+                onChange={formikPostTargets.handleChange}
+                value={formikPostTargets.values.name}
+              />
+              {formikPostTargets.errors.name ? (
+                <div className={styles.error}>{formikPostTargets.errors.name}</div>
+              ) : null}
+            </div>
+            <div>
+              <label htmlFor="desc">Description</label>
+              <input
+                type="desc"
+                id="desc"
+                name="desc"
+                onChange={formikPostTargets.handleChange}
+                value={formikPostTargets.values.desc}
+              />
+              {formikPostTargets.errors.desc ? (
+                <div className={styles.error}>{formikPostTargets.errors.desc}</div>
+              ) : null}
+            </div>
+            <button type="submit">Add targets</button>
+          </form>
+        <h2>Change targets</h2>
+          <form onSubmit={formikPatchTargets.handleSubmit}>
+            <div>
+              <label htmlFor="name">Name</label>
+              <input
+                type="name"
+                id="name"
+                name="name"
+                onChange={formikPatchTargets.handleChange}
+                value={formikPatchTargets.values.name}
+              />
+              {formikPatchTargets.errors.name ? (
+                <div className={styles.error}>{formikPatchTargets.errors.name}</div>
+              ) : null}
+            </div>
+            <div>
+              <label htmlFor="desc">Description</label>
+              <input
+                type="desc"
+                id="desc"
+                name="desc"
+                onChange={formikPatchTargets.handleChange}
+                value={formikPatchTargets.values.desc}
+              />
+              {formikPatchTargets.errors.desc ? (
+                <div className={styles.error}>{formikPatchTargets.errors.desc}</div>
+              ) : null}
+            </div>
+            <button type="submit">Change targets</button>
+          </form>
+          
     </>
   );
 }

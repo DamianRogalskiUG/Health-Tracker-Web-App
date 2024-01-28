@@ -283,9 +283,13 @@ app.delete('/targets', async (req, res) => {
 
 app.patch('/targets', async (req, res) => {
     try {
+        const { name, desc } = req.body;
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('targets').updateOne(req.body);
+        const result = await db.collection('targets').updateOne(
+            { name: name },
+            { $set: { desc: desc } }
+        );
         console.log(result);
         res.json(result);
         
