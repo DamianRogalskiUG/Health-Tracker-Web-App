@@ -429,6 +429,7 @@ export default function Home() {
   const formikPostActivities = useFormik({
     initialValues: {
       name: "",
+      newName: "",
       desc: "",
     },
     validationSchema: Yup.object({
@@ -447,6 +448,33 @@ export default function Home() {
         alert("Dodano aktywności");
       } else {
         alert('Błąd przy dodawaniu aktywności');
+      }
+    }
+  });
+
+  const formikPatchActivities = useFormik({
+    initialValues: {
+      name: "",
+      desc: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      desc: Yup.string().required("Required"),
+      }),
+    onSubmit: async (values) => {
+      const res = await fetch(`http://localhost:4000/activities`, {
+        method: "PATCH",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        alert("Zmieniono aktywności");
+        client.publish('user/activitiesPost', 'User updated the activities successfully', { qos: 0, retain: false });
+
+      } else {
+        alert('Błąd przy zmianie aktywności');
       }
     }
   });
@@ -1071,6 +1099,50 @@ export default function Home() {
               </div>
               <button type="submit">Add activities</button>
             </form>
+          <h2>Change activities</h2>
+            <form onSubmit={formikPatchActivities.handleSubmit}>
+              <div>
+                <label htmlFor="name">Name</label>
+                <input
+                  type="name"
+                  id="name"
+                  name="name"
+                  onChange={formikPatchActivities.handleChange}
+                  value={formikPatchActivities.values.name}
+                />
+                {formikPatchActivities.errors.name ? (
+                  <div className={styles.error}>{formikPatchActivities.errors.name}</div>
+                ) : null}
+              </div>
+              <div>
+                <label htmlFor="newName">New Name</label>
+                <input
+                  type="newName"
+                  id="newName"
+                  name="newName"
+                  onChange={formikPatchActivities.handleChange}
+                  value={formikPatchActivities.values.newName}
+                />
+                {formikPatchActivities.errors.newName ? (
+                  <div className={styles.error}>{formikPatchActivities.errors.newName}</div>
+                ) : null}
+              </div>
+              <div>
+                <label htmlFor="desc">Description</label>
+                <input
+                  type="desc"
+                  id="desc"
+                  name="desc"
+                  onChange={formikPatchActivities.handleChange}
+                  value={formikPatchActivities.values.desc}
+                />
+                {formikPatchActivities.errors.desc ? (
+                  <div className={styles.error}>{formikPatchActivities.errors.desc}</div>
+                ) : null}
+              </div>
+              <button type="submit">Change activities</button>
+            </form>
+            
     </>
   );
 }

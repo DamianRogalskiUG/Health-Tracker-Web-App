@@ -343,6 +343,7 @@ app.post('/activities', async (req, res) => {
 
 app.delete('/activities', async (req, res) => {
     try {
+        const { name, desc } = req.body;
         const client = await connect();
         const db = client.db("health_tracker");
         const result = await db.collection('activities').deleteOne(req.body);
@@ -356,11 +357,24 @@ app.delete('/activities', async (req, res) => {
 
 app.patch('/activities', async (req, res) => {
     try {
+        const { name, newName, desc } = req.body;
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('activities').updateOne(req.body);
-        console.log(result);
-        res.json(result);
+        if (newName) {
+            const result = await db.collection('activities').updateOne(
+                { name: name },
+                { $set: { name: newName, desc: desc } }
+            );
+            console.log(result);
+            res.json(result);
+        } else {
+            const result = await db.collection('activities').updateOne(
+                { name: name },
+                { $set: { desc: desc } }
+            );
+            console.log(result);
+            res.json(result);
+        }
         
     } catch (error) {
         console.log(error)
