@@ -23,38 +23,170 @@ h1 {
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
+
+    button {
+        background-color: black;
+        font-weight: bold;
+        color: orange;
+        border: none;
+        font-size: 1.5em;
+        padding: 0.5em;
+    }
+    form {
+        label {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        input {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        button {
+            font-size: 1em;
+        }
+    }
 }
 .RegisterContainer {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
+    button {
+        background-color: black;
+        font-weight: bold;
+        color: orange;
+        border: none;
+        font-size: 1.5em;
+        padding: 0.5em;
+    }
+    form {
+        label {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        input {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        button {
+            font-size: 1em;
+        }
+    }
 }
 .LogoutContainer {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     padding: 1em;
+    button {
+        background-color: black;
+        font-weight: bold;
+        color: orange;
+        border: none;
+        font-size: 1.5em;
+        padding: 0.5em;
+    }
+    .connected {
+        padding: 1em;
+        font-size: 1.5em;
+        color: green;
+        font-weight: bold;
+    }
+    .disconnected {
+        font-size: 1.5em;
+        color: red;
+        font-weight: bold;
+    }
 }
 .ChatContainer {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
-}
-.UserContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1em;
+    margin: 1em;
+    border-radius: 2em;
+
+    form {
+        display: flex;
+        flex-direction: row;
+        padding: 1em;
+        align-items: center;
+        justify-content: center;
+        
+        input {
+            font-size: 1em;
+            padding: 0.5em;
+            border: none;
+        }
+        button {
+            background-color: black;
+            font-weight: bold;
+            color: orange;
+            border: none;
+            font-size: 1em;
+            padding: 0.5em;
+
+        }
+    }
 }
 .NotificationTab {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
+    background-color: black;
+    color: orange;
     ul {
         list-style: none;
+        font-size: 1em;
+        li {
+            display: flex;
+            align-items: center;
+            button {
+                background-color: black;
+                font-weight: bold;
+                color: red;
+                border: none;
+                font-size: 0.75em;
+                padding: 0.5em;
+            }
+
+        }
+
+    }
+}
+.UserContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1em;
+    button {
+        background-color: black;
+        font-weight: bold;
+        color: orange;
+        border: none;
+        font-size: 1.5em;
+        padding: 0.5em;
+    }
+    form {
+        label {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        input {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        button {
+            font-size: 1em;
+        }
     }
 }
 .MeasurementsContainer {
@@ -62,16 +194,85 @@ h1 {
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
+    button {
+        background-color: black;
+        font-weight: bold;
+        color: orange;
+        border: none;
+        font-size: 1.5em;
+        padding: 0.5em;
+    }
+    form {
+        label {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        input {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        button {
+            font-size: 1em;
+        }
+    }
 }
 .TargetsContainer {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
+    button {
+        background-color: black;
+        font-weight: bold;
+        color: orange;
+        border: none;
+        font-size: 1.5em;
+        padding: 0.5em;
+    }
+    form {
+        label {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        input {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        button {
+            font-size: 1em;
+        }
+    }
 }
 .ActivitiesContainer {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
+    button {
+        background-color: black;
+        font-weight: bold;
+        color: orange;
+        border: none;
+        font-size: 1.5em;
+        padding: 0.5em;
+    }
+    form {
+        label {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        input {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        button {
+            font-size: 1em;
+        }
+    }
 }

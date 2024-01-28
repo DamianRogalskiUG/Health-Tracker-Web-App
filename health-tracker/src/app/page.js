@@ -649,7 +649,7 @@ export default function Home() {
       {!logout && 
       <>
       <div className="LoginContainer">
-        <button onClick={() => setLogin(prevState => !prevState)}>Login</button>
+        <button onClick={() => setLogin(prevState => !prevState)}>Login Form</button>
         {login && <form onSubmit={formik.handleSubmit}>
           <div>
             <label htmlFor="email">Email</label>
@@ -683,7 +683,7 @@ export default function Home() {
         </form>}
       </div> 
       <div className="RegisterContainer">
-        <button onClick={() => setRegister(prevState => !prevState)}>Register</button>
+        <button onClick={() => setRegister(prevState => !prevState)}>Register Form</button>
         {register && <form onSubmit={formikRegister.handleSubmit}>
           <div>
             <label htmlFor="email">Email</label>
@@ -736,22 +736,21 @@ export default function Home() {
       </div>
       </>
       }
-
+      <div className="LogoutContainer">
       {logout && 
       <>
-      <div className="LogoutContainer">
         <form onSubmit={formikLogout.handleSubmit}>
           <button type="submit">Log out</button>
         </form>
+      </>
+      }
         {user && user.success ? (
-          <div className={styles.connected}>User is Connected</div>
+          <div className='connected'>User is Connected</div>
         ) : (
-          <div className={styles.disconnected}>User is Disconnected</div>
+          <div className='disconnected'>User is Disconnected</div>
         )
         }
       </div>
-      </>
-      }
       <div className="ChatContainer">
         <h2>Chat</h2>
         <div className={styles.chatContainer}>
@@ -773,7 +772,6 @@ export default function Home() {
         </div>
         <form onSubmit={formikChat.handleSubmit}>
           <div>
-            <label htmlFor="message">Message</label>
             <input
               type="text"
               id="message"
@@ -786,6 +784,17 @@ export default function Home() {
         </form>
       </div>
     </div>
+    <div className="NotificationTab">
+          <h2>Notifications</h2>
+          <ul>
+            {notifications.map((notification) => (
+              <li key={notification.id} className={`notification ${notification.type}`}>
+                <span>{notification.message}</span>
+                <button onClick={() => removeNotification(notification.id)}>CLOSE</button>
+              </li>
+            ))}
+          </ul>
+      </div>
       <div className="UserContainer">
         <h2>Change user data</h2>
         <form onSubmit={formikUserPatch.handleSubmit}>
@@ -855,17 +864,6 @@ export default function Home() {
           <button type="submit">Submit</button>
         </form>
 
-      </div>
-      <div className="NotificationTab">
-          <h2>Notifications</h2>
-          <ul>
-            {notifications.map((notification) => (
-              <li key={notification.id} className={`notification ${notification.type}`}>
-                <span>{notification.message}</span>
-                <button onClick={() => removeNotification(notification.id)}>Close</button>
-              </li>
-            ))}
-          </ul>
       </div>
       <div className="MeasurementsContainer">
         <h2>Get measurements</h2>
