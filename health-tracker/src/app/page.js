@@ -22,6 +22,9 @@ export default function Home() {
   const [measurements, setMeasurements] = useState([]);
   const [targets, setTargets] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [logout, setLogout] = useState(false);
+  const [login, setLogin] = useState(false);
+  const [register, setRegister] = useState(false);
   
     const addNotification = (message, type) => {
       const newNotification = { id: Date.now(), message, type };
@@ -64,6 +67,7 @@ export default function Home() {
         Cookie.set("token", data.token);
         alert('Zalogowano');
         setUser(data);
+        setLogout(true);
         client.publish('user/login', 'User logged in successfully', { qos: 0, retain: false });
         client.publish('user/presence', 'User is online', { qos: 0, retain: false });
 
@@ -93,6 +97,7 @@ export default function Home() {
         alert('Zarejestrowano');
         client.publish('user/register', 'User registered in successfully', { qos: 0, retain: false });
         setUser(data);
+        setLogout(true);
       } else {
         alert('Błąd rejestracji');
       }
@@ -116,6 +121,7 @@ export default function Home() {
         const data = await res.json();
         Cookie.set("token", data.token);
         alert('Wylogowano');
+        setLogout(prevState => !prevState)
         client.publish('user/logout', 'User logged out successfully', { qos: 0, retain: false });
         setUser(null);
       }
@@ -637,118 +643,134 @@ export default function Home() {
 
   return (
     <>
-      <h1>Health Tracker</h1>
-      <h1>User</h1>
-      <h2>Login</h2>
-      <form onSubmit={formik.handleSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-          />
-          {formik.errors.email ? (
-            <div className={styles.error}>{formik.errors.email}</div>
-          ) : null}
-        </div>
-
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={formik.handleChange}
-            value={formik.values.password}
-          />
-          {formik.errors.password ? (
-            <div className={styles.error}>{formik.errors.password}</div>
-          ) : null}
-        </div>
-
-        <button type="submit">Submit</button>
-      </form>
-      <h2>Register</h2>
-      <form onSubmit={formikRegister.handleSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            onChange={formikRegister.handleChange}
-            value={formikRegister.values.email}
-          />
-          {formikRegister.errors.email ? (
-            <div className={styles.error}>{formikRegister.errors.email}</div>
-          ) : null}
-        </div>
-
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={formikRegister.handleChange}
-            value={formikRegister.values.password}
-          />
-          {formikRegister.errors.password ? (
-            <div className={styles.error}>
-              {formikRegister.errors.password}
-            </div>
-          ) : null}
-        </div>
-
-        <div>
-          <label htmlFor="passwordConfirm">Password Confirm</label>
-          <input
-            type="password"
-            id="passwordConfirm"
-            name="passwordConfirm"
-            onChange={formikRegister.handleChange}
-            value={formikRegister.values.passwordConfirm}
-          />
-          {formikRegister.errors.passwordConfirm ? (
-            <div className={styles.error}>
-              {formikRegister.errors.passwordConfirm}
-            </div>
-          ) : null}
-        </div>
-
-        <button type="submit">Submit</button>
-      </form>
-      <h2>Logout</h2>
-      <form onSubmit={formikLogout.handleSubmit}>
-        <button type="submit">Log out</button>
-      </form>
-      {user && user.success ? (
-        <div className={styles.connected}>User is Connected</div>
-      ) : (
-        <div className={styles.disconnected}>User is Disconnected</div>
-      )
-      }
-      <h2>Chat</h2>
-      <div className={styles.chatContainer}>
-        <div className={styles.chatMessages}>
-          {chatMessages.map((msg, index) => (
-            <div key={index} className={styles.chatMessage}>
-              {msg.user === null ? (
-              <>
-              <strong>Anonim</strong> {msg.message}
-              </>
-              ) : (
-                <>
-                <strong>{msg.user.user.email}</strong> {msg.message}
-                </>
-              )}
-
-            </div>
-          ))}
+      <div className="nav">
+        <div className="Logo">Health Tracker</div>
       </div>
+      {!logout && 
+      <>
+      <div className="LoginContainer">
+        <button onClick={() => setLogin(prevState => !prevState)}>Login</button>
+        {login && <form onSubmit={formik.handleSubmit}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              onChange={formik.handleChange}
+              value={formik.values.email}
+            />
+            {formik.errors.email ? (
+              <div className={styles.error}>{formik.errors.email}</div>
+            ) : null}
+          </div>
+
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              onChange={formik.handleChange}
+              value={formik.values.password}
+            />
+            {formik.errors.password ? (
+              <div className={styles.error}>{formik.errors.password}</div>
+            ) : null}
+          </div>
+
+          <button type="submit">Submit</button>
+        </form>}
+      </div> 
+      <div className="RegisterContainer">
+        <button onClick={() => setRegister(prevState => !prevState)}>Register</button>
+        {register && <form onSubmit={formikRegister.handleSubmit}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              onChange={formikRegister.handleChange}
+              value={formikRegister.values.email}
+            />
+            {formikRegister.errors.email ? (
+              <div className={styles.error}>{formikRegister.errors.email}</div>
+            ) : null}
+          </div>
+
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              onChange={formikRegister.handleChange}
+              value={formikRegister.values.password}
+            />
+            {formikRegister.errors.password ? (
+              <div className={styles.error}>
+                {formikRegister.errors.password}
+              </div>
+            ) : null}
+          </div>
+
+          <div>
+            <label htmlFor="passwordConfirm">Password Confirm</label>
+            <input
+              type="password"
+              id="passwordConfirm"
+              name="passwordConfirm"
+              onChange={formikRegister.handleChange}
+              value={formikRegister.values.passwordConfirm}
+            />
+            {formikRegister.errors.passwordConfirm ? (
+              <div className={styles.error}>
+                {formikRegister.errors.passwordConfirm}
+              </div>
+            ) : null}
+          </div>
+
+          <button type="submit">Submit</button>
+        </form>}
+      </div>
+      </>
+      }
+
+      {logout && 
+      <>
+      <div className="LogoutContainer">
+        <form onSubmit={formikLogout.handleSubmit}>
+          <button type="submit">Log out</button>
+        </form>
+        {user && user.success ? (
+          <div className={styles.connected}>User is Connected</div>
+        ) : (
+          <div className={styles.disconnected}>User is Disconnected</div>
+        )
+        }
+      </div>
+      </>
+      }
+      <div className="ChatContainer">
+        <h2>Chat</h2>
+        <div className={styles.chatContainer}>
+          <div className={styles.chatMessages}>
+            {chatMessages.map((msg, index) => (
+              <div key={index} className={styles.chatMessage}>
+                {msg.user === null ? (
+                <>
+                <strong>Anonim</strong> {msg.message}
+                </>
+                ) : (
+                  <>
+                  <strong>{msg.user.user.email}</strong> {msg.message}
+                  </>
+                )}
+
+              </div>
+            ))}
+        </div>
         <form onSubmit={formikChat.handleSubmit}>
           <div>
             <label htmlFor="message">Message</label>
@@ -762,8 +784,9 @@ export default function Home() {
           </div>
           <button type="submit">Send</button>
         </form>
+      </div>
     </div>
-
+      <div className="UserContainer">
         <h2>Change user data</h2>
         <form onSubmit={formikUserPatch.handleSubmit}>
           <div>
@@ -831,7 +854,9 @@ export default function Home() {
           </div>
           <button type="submit">Submit</button>
         </form>
-        <div className="notification-tab">
+
+      </div>
+      <div className="NotificationTab">
           <h2>Notifications</h2>
           <ul>
             {notifications.map((notification) => (
@@ -841,8 +866,8 @@ export default function Home() {
               </li>
             ))}
           </ul>
-        </div>
-        <h1>measurements</h1>
+      </div>
+      <div className="MeasurementsContainer">
         <h2>Get measurements</h2>
         <form onSubmit={formikGetMeasurements.handleSubmit}>
           <div>
@@ -972,7 +997,8 @@ export default function Home() {
             </div>
             <button type="submit">Delete measurements</button>
           </form>
-        <h1>Targets</h1>
+        </div>
+        <div className="TargetsContainer">
         <h2>Get targets</h2>
         <form onSubmit={formikGetTargets.handleSubmit}>
           <div>
@@ -1088,8 +1114,8 @@ export default function Home() {
             </div>
             <button type="submit">Delete targets</button>
           </form>
-
-          <h1>Activities</h1>
+        </div>
+        <div className="ActivitiesContainer">
           <h2>Get activities</h2>
           <form onSubmit={formikGetActivities.handleSubmit}>
             <div>
@@ -1204,7 +1230,7 @@ export default function Home() {
               </div>
               <button type="submit">Delete activities</button>
             </form>
-
+        </div>
     </>
   );
 }
