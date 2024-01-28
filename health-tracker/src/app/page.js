@@ -25,6 +25,7 @@ export default function Home() {
   const [logout, setLogout] = useState(false);
   const [login, setLogin] = useState(false);
   const [register, setRegister] = useState(false);
+  const [message, setMessage] = useState('No message');
   
     const addNotification = (message, type) => {
       const newNotification = { id: Date.now(), message, type };
@@ -46,6 +47,24 @@ export default function Home() {
     }, 3000);
 
     return () => clearTimeout(notificationTimeout);
+  }, []);
+
+  useEffect(() => {
+    const eventSource = new EventSource('http://localhost:4000/events');
+
+    eventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      setMessage("data.message");
+    };
+
+    eventSource.onerror = (error) => {
+      console.error('EventSource failed:', error);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
   }, []);
 
   const formik = useFormik({
@@ -511,6 +530,8 @@ export default function Home() {
     }
   });
 
+
+
   useEffect(() => {
     if (client) {
       client.subscribe('user/presence', { qos: 0 });
@@ -646,6 +667,10 @@ export default function Home() {
       <div className="nav">
         <div className="Logo">Health Tracker</div>
       </div>
+      <div>
+      <h1>Server-Sent Events</h1>
+      <p>{message}</p>
+    </div>
       {!logout && 
       <>
       <div className="LoginContainer">
@@ -884,13 +909,13 @@ export default function Home() {
           <button type="submit">Get measurements</button>
         </form>
         {measurements && measurements.length > 0  && (
-          <div className={styles.measurements}>
+          <ul className={styles.measurements}>
             {measurements.map((measurement, index) => (
-              <div key={index} className={styles.measurement}>
+              <li key={index} className={styles.measurement}>
                 <span>{measurement.weight}</span>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
         <h2>Add measurements</h2>
           <form onSubmit={formikPostMeasurements.handleSubmit}>
@@ -1012,14 +1037,14 @@ export default function Home() {
           <button type="submit">Get targets</button>
         </form>
         {targets && targets.length > 0  && (
-          <div className={styles.targets}>
+          <ul className={styles.targets}>
             {targets.map((target, index) => (
-              <div key={index} className={styles.target}>
+              <li key={index} className={styles.target}>
                 <span>{target.name}</span>
                 <span>{target.desc}</span>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
         <h2>Add targets</h2>
           <form onSubmit={formikPostTargets.handleSubmit}>
@@ -1129,14 +1154,14 @@ export default function Home() {
             <button type="submit">Get activities</button>
           </form>
           {activities && activities.length > 0  && (
-            <div className={styles.activities}>
+            <ul className={styles.activities}>
               {activities.map((activity, index) => (
-                <div key={index} className={styles.activity}>
+                <li key={index} className={styles.activity}>
                   <span>{activity.name}</span>
                   <span>{activity.desc}</span>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
           <h2>Add activities</h2>
             <form onSubmit={formikPostActivities.handleSubmit}>

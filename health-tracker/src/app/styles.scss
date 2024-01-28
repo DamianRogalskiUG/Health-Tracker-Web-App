@@ -4,6 +4,17 @@ body {
     font-family: sans-serif;
     background-color: orange;
 }
+ul {
+    li {
+        font-size: 1em;
+        padding: 0.5em;
+        margin: 0.5em;
+        span {
+            font-weight: bold;
+            margin: 1em;
+        }
+    }
+}
 h1 {
     font-size: 2em;
 }
@@ -215,6 +226,13 @@ h1 {
         }
         button {
             font-size: 1em;
+        }
+    }
+    ul {
+        li {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
         }
     }
 }

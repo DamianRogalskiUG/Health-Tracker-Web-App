@@ -7,13 +7,24 @@ const mqtt = require('mqtt');
 const jwt = require('jsonwebtoken');
 const http = require("http");
 const WebSocket = require("ws");
+const sse = require('server-sent-events');
+const SseChannel = require('sse-channel');
+const https = require('node:https');
+const fs = require('node:fs');
 
+const options = {
+    key: fs.readFileSync('file.key'),
+    cert: fs.readFileSync('cert.crt')
+};
 
 const app = express();
 const port = 4000;
 const JWT_SECRET = 'secret_password';
-const server = http.createServer(app);
+const server = https.createServer(options, app);
 
+const mqttUrl = 'mqtt://localhost:1883';
+
+const mqttClient = mqtt.connect(mqttUrl);
 
 app.use(cors());
 app.use(cookieParser());
@@ -23,11 +34,31 @@ const createToken = (user) => {
     const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
     return token;
 };
+
+const logToFile = (message) => {
+    fs.appendFileSync('logs.txt', `${new Date().toISOString()} - ${message}\n`);
+  };
   
-  const mqttUrl = 'mqtt://localhost:1883';
+  const originalConsoleLog = console.log;
+  console.log = (...args) => {
+    originalConsoleLog(...args);
+    logToFile(args.join(' '));
+  };
 
-  const mqttClient = mqtt.connect(mqttUrl);
+const dateChanel = new SseChannel();
+setInterval(() => {
+    dateChanel.send({ date: new Date().toISOString() });
+}, 1000);
 
+app.get('/events', sse, (req, res) => {
+    const interval = setInterval(() => {
+        res.sse('message', { message: 'Keep up the good work!' });
+    }, 1000);
+
+    res.on('close', () => {
+        clearInterval(interval);
+    });
+});
 
 app.get('/users', async (req, res) => {
     try {
@@ -62,6 +93,7 @@ app.post('/register', async (req, res) => {
   
       const result = await db.collection('users').insertOne(newUser);
       if (result) {
+        console.log("user registered " + result);
         mqttClient.publish('user-registered', JSON.stringify(newUser));
         res.status(201).json({ success: true, user: newUser });
 
@@ -80,7 +112,7 @@ app.post('/register', async (req, res) => {
       const client = await connect();
       const db = client.db("health_tracker");
       const { email, password } = req.body;
-      
+    
       const user = await db.collection('users').findOne({ email: email });
   
       if (!user) {
@@ -92,9 +124,9 @@ app.post('/register', async (req, res) => {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-
-
       const token = createToken(user);
+      console.log("user logged " + user);
+
       res.json({ success: true, user, token });
 
     } catch (error) {
@@ -104,6 +136,7 @@ app.post('/register', async (req, res) => {
   });
   app.post('/logout', (req, res) => {
     try {
+        console.log("user logged out");
       res.clearCookie('token');
       res.json({ success: true });
     } catch (error) {
@@ -138,6 +171,7 @@ app.delete('/users', async (req, res) => {
             email: req.body.email
         });
         if (result) {
+            console.log("user deleted " + result);
             res.json(result);
         }
     } catch (error) {
