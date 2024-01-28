@@ -13,15 +13,10 @@ const { ObjectId } = require('mongodb');
 const bodyParser = require('body-parser');
 
 
-const options = {
-    key: fs.readFileSync('file.key'),
-    cert: fs.readFileSync('cert.crt')
-};
 
 const app = express();
 const port = 4000;
 const JWT_SECRET = 'secret_password';
-const server = https.createServer(options, app);
 
 
 const chatMessages = ['test message 1', 'test message 2', 'test message 3'];
@@ -34,6 +29,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
+
 
 
 const createToken = (user) => {
@@ -314,9 +310,13 @@ app.get('/targets', async (req, res) => {
 
 app.post('/targets', async (req, res) => {
     try {
+        const { name, desc } = req.body;
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('targets').findOne(req.body);
+        const result = await db.collection('targets').insertOne({
+            name: name,
+            desc: desc,
+        });
         console.log(result);
         res.json(result);
         

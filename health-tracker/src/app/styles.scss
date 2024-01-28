@@ -17,7 +17,7 @@ h1 {
     .Logo {
         font-size: 3em;
         font-weight: bold;
-        color: darkorange;
+        color: orange;
     }
 
 }
@@ -168,6 +168,30 @@ h1 {
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
+
+    button {
+        background-color: black;
+        font-weight: bold;
+        color: orange;
+        border: none;
+        font-size: 1.5em;
+        padding: 0.5em;
+    }
+    form {
+        label {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        input {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+        }
+        button {
+            font-size: 1em;
+        }
+    }
     ul {
         li {
             font-size: 1em;
@@ -179,46 +203,13 @@ h1 {
             }
         }
     }
-    button {
-        background-color: black;
-        font-weight: bold;
-        color: orange;
-        border: none;
-        font-size: 1.5em;
-        padding: 0.5em;
-    }
-    form {
-        label {
-            font-size: 1em;
-            padding: 0.5em;
-            margin: 0.5em;
-        }
-        input {
-            font-size: 1em;
-            padding: 0.5em;
-            margin: 0.5em;
-        }
-        button {
-            font-size: 1em;
-        }
-    }
 }
 .MeasurementsContainer {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
-    ul {
-    li {
-        font-size: 1em;
-        padding: 0.5em;
-        margin: 0.5em;
-        span {
-            font-weight: bold;
-            margin: 1em;
-        }
-    }
-}
+
     button {
         background-color: black;
         font-weight: bold;
@@ -247,6 +238,10 @@ h1 {
             font-size: 1em;
             padding: 0.5em;
             margin: 0.5em;
+            span {
+                font-weight: bold;
+                margin: 1em;
+            }
         }
     }
 }
@@ -276,6 +271,17 @@ h1 {
         }
         button {
             font-size: 1em;
+        }
+    }
+    ul {
+        li {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+            span {
+                font-weight: bold;
+                margin: 1em;
+            }
         }
     }
 }

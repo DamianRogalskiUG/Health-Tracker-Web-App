@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { useFormik } from "formik";
 import Cookie from "js-cookie";
@@ -29,6 +29,7 @@ export default function Home() {
   const [email, setEmail] = useState("");
 
 
+
   const formikHttpChat = useFormik({
     initialValues: {
       message: "",
@@ -36,7 +37,7 @@ export default function Home() {
     validationSchema: Yup.object({
       message: Yup.string().required('Message is required'),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       try {
 
         const res = await fetch("http://localhost:4000/messages", { 
@@ -51,10 +52,10 @@ export default function Home() {
             "Content-Type": "application/json",
           },
         });
-        console.log(res)
         if (res.ok) {
           const data = await res.json();
           setHttpChatMessages((prevMessages) => [...prevMessages, data]);
+          resetForm();
         } else {
           alert('Błąd przy wysyłaniu wiadomości');
         }
@@ -64,6 +65,24 @@ export default function Home() {
     },
   });
 
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/messages");
+        if (res.ok) {
+          const data = await res.json();
+          setHttpChatMessages(data);
+        } else {
+          console.error('Błąd przy pobieraniu wiadomości');
+        }
+      } catch (error) {
+        console.error('Błąd przy pobieraniu wiadomości:', error);
+      }
+    };
+
+    fetchMessages();
+
+  }, []); 
 
 
   const formik = useFormik({
@@ -72,7 +91,7 @@ export default function Home() {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const res = await fetch("http://localhost:4000/login", { 
         method: "POST",
         body: JSON.stringify(values),
@@ -88,6 +107,7 @@ export default function Home() {
         alert('Zalogowano');
         setUser(data);
         setLogout(true);
+        resetForm();
         client.publish('user/login', 'User logged in successfully', { qos: 0, retain: false });
         client.publish('user/presence', 'User is online', { qos: 0, retain: false });
       } else {
@@ -106,7 +126,7 @@ export default function Home() {
     onSubmit: async (values) => {
       const res = await fetch("http://localhost:4000/register", { 
         method: "POST",
-        body: JSON.stringify(values),
+        body: JSON.stringify(values, { resetForm }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -118,6 +138,7 @@ export default function Home() {
         client.publish('user/register', 'User registered in successfully', { qos: 0, retain: false });
         setUser(data);
         setLogout(true);
+        resetForm();
         setEmail(values.email);
       } else {
         alert('Błąd rejestracji');
@@ -133,7 +154,7 @@ export default function Home() {
     onSubmit: async (values) => {
       const res = await fetch("http://localhost:4000/logout", { 
         method: "POST",
-        body: JSON.stringify(values),
+        body: JSON.stringify(values, { resetForm }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -147,6 +168,8 @@ export default function Home() {
         client.publish('user/presence', 'User is offline', { qos: 0, retain: false });
         setUser(null);
         setEmail("");
+        resetForm();
+
       }
     },
   });
@@ -157,8 +180,9 @@ export default function Home() {
     validationSchema: Yup.object({
       message: Yup.string().required('Message is required'),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       if (client) {
+        resetForm()
         client.publish('chat/messages', JSON.stringify({ user, message: values.message }), { qos: 0, retain: false });
       
       }
@@ -170,7 +194,7 @@ export default function Home() {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const res = await fetch("http://localhost:4000/users", {
         method: "PATCH",
         body: JSON.stringify(values),
@@ -194,7 +218,7 @@ export default function Home() {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const res = await fetch("http://localhost:4000/users", {
         method: "DELETE",
         body: JSON.stringify(values),
@@ -204,13 +228,10 @@ export default function Home() {
       });
       if (res.ok) {
         const data = await res.json();
-        if (data.success) {
-          alert('Usunięto konto');
-          client.publish('user/deleteUser', 'User deleted the account successfully', { qos: 0, retain: false });
-        } else {
-          alert('Błąd przy usuwaniu konta');
-        }
+        alert('Usunięto konto');
+        client.publish('user/deleteUser', 'User deleted the account successfully', { qos: 0, retain: false });
         setUser(data);
+        resetForm();
       } else {
         alert('Błąd przy usuwaniu konta');
       }
@@ -225,7 +246,7 @@ export default function Home() {
     validationSchema: Yup.object({
         email: Yup.string().email("Invalid email address").required("Required"),
         }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       console.log(values.email)
       const res = await fetch(`http://localhost:4000/measurements?email=${values.email}`, {
         method: "GET",
@@ -237,6 +258,7 @@ export default function Home() {
         const data = await res.json();
         alert("Pobrano pomiary");
         setMeasurements(data);
+        resetForm();
         client.publish('user/measurementsGet', 'User got measurements successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy pobieraniu pomiarów');
@@ -254,7 +276,7 @@ export default function Home() {
       height: Yup.number().required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
       }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       console.log(values.email)
       const res = await fetch(`http://localhost:4000/measurements`, {
         method: "POST",
@@ -266,9 +288,10 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         alert("Dodano pomiary");
+        resetForm();
         client.publish('user/measurementsAdd', 'User added measurements successfully', { qos: 0, retain: false });
       } else {
-        alert('Błąd przy dodawaniu pomiarów');
+        alert('Użytkownik ma już wprowadzone pomiary');
       }
     }
   });
@@ -284,7 +307,7 @@ export default function Home() {
       height: Yup.number().required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
       }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       console.log(values.email)
       const res = await fetch(`http://localhost:4000/measurements`, {
         method: "PATCH",
@@ -296,6 +319,7 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         alert("Zmieniono pomiary");
+        resetForm();
         client.publish('user/measurementsPatch', 'User updated measurements successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy zmianie pomiarów');
@@ -310,7 +334,7 @@ export default function Home() {
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email address").required("Required"),
       }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       console.log(values.email)
       const res = await fetch(`http://localhost:4000/measurements`, {
         method: "DELETE",
@@ -322,6 +346,7 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         alert("Usunięto pomiary");
+        resetForm();
         client.publish('user/measurementsDelete', 'User deleted measurements successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy usuwaniu pomiarów');
@@ -332,10 +357,7 @@ export default function Home() {
     initialValues: {
       email: "",
     },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email address").required("Required"),
-      }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const res = await fetch(`http://localhost:4000/users?email=${values.email}`, {
         method: "GET",
         headers: {
@@ -346,6 +368,7 @@ export default function Home() {
         const data = await res.json();
         alert("Pobrano użytkowników");
         setUsers(data);
+        resetForm();
         client.publish('user/usersGet', 'User got the users successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy pobieraniu użytkowników');
@@ -357,7 +380,7 @@ export default function Home() {
     initialValues: {
       name: "",
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const res = await fetch(`http://localhost:4000/targets?name=${values.name}`, {
         method: "GET",
         headers: {
@@ -368,6 +391,7 @@ export default function Home() {
         const data = await res.json();
         alert("Pobrano cele");
         setTargets(data);
+        resetForm();
         client.publish('user/targetsGet', 'User got the target successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy pobieraniu celów');
@@ -384,7 +408,7 @@ export default function Home() {
       name: Yup.string().required("Required"),
       desc: Yup.string().required("Required"),
       }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const res = await fetch(`http://localhost:4000/targets`, {
         method: "POST",
         body: JSON.stringify(values),
@@ -395,6 +419,7 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         alert("Dodano cele");
+        resetForm();
         client.publish('user/targetsPost', 'User added the target successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy dodawaniu celów');
@@ -412,7 +437,7 @@ export default function Home() {
       name: Yup.string().required("Required"),
       desc: Yup.string().required("Required"),
       }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const res = await fetch(`http://localhost:4000/targets`, {
         method: "PATCH",
         body: JSON.stringify(values),
@@ -422,6 +447,7 @@ export default function Home() {
       });
       if (res.ok) {
         alert("Zmieniono cele");
+        resetForm();
         client.publish('user/targetsPatch', 'User updated the target successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy zmianie celów');
@@ -433,7 +459,7 @@ export default function Home() {
     initialValues: {
       name: "",
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const res = await fetch(`http://localhost:4000/targets`, {
         method: "DELETE",
         body: JSON.stringify(values),
@@ -443,6 +469,7 @@ export default function Home() {
       });
       if (res.ok) {
         alert("Usunięto cele");
+        resetForm();
         client.publish('user/targetsDelete', 'User deleted a target successfully', { qos: 0, retain: false });
 
       } else {
@@ -455,7 +482,7 @@ export default function Home() {
     initialValues: {
       name: "",
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const res = await fetch(`http://localhost:4000/activities?name=${values.name}`, {
         method: "GET",
         headers: {
@@ -466,6 +493,7 @@ export default function Home() {
         const data = await res.json();
         alert("Pobrano aktywności");
         setActivities(data);
+        resetForm();
         client.publish('user/activitiesGet', 'User got the activities successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy pobieraniu aktywności');
@@ -483,7 +511,7 @@ export default function Home() {
       name: Yup.string().required("Required"),
       desc: Yup.string().required("Required"),
       }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const res = await fetch(`http://localhost:4000/activities`, {
         method: "POST",
         body: JSON.stringify(values),
@@ -493,6 +521,7 @@ export default function Home() {
       });
       if (res.ok) {
         alert("Dodano aktywności");
+        resetForm();
         client.publish('user/activitiesPost', 'User added the activities successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy dodawaniu aktywności');
@@ -509,7 +538,7 @@ export default function Home() {
       name: Yup.string().required("Required"),
       desc: Yup.string().required("Required"),
       }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const res = await fetch(`http://localhost:4000/activities`, {
         method: "PATCH",
         body: JSON.stringify(values),
@@ -519,6 +548,7 @@ export default function Home() {
       });
       if (res.ok) {
         alert("Zmieniono aktywności");
+        resetForm();
         client.publish('user/activitiesPatch', 'User updated the activities successfully', { qos: 0, retain: false });
 
       } else {
@@ -534,7 +564,7 @@ export default function Home() {
     validationSchema: Yup.object({
       name: Yup.string().required("Required"),
       }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const res = await fetch(`http://localhost:4000/activities`, {
         method: "DELETE",
         body: JSON.stringify(values),
@@ -544,6 +574,7 @@ export default function Home() {
       });
       if (res.ok) {
         alert("Usunięto aktywności");
+        resetForm();
         client.publish('user/activitiesDelete', 'User deleted the activities successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy usuwaniu aktywności');
@@ -903,13 +934,13 @@ export default function Home() {
           <ul className={styles.users}>
             {users.map((user, index) => (
               <li key={index} className={styles.user}>
-                <span>{user.email}</span>
+                <span>User - {user.email}</span>
               </li>
             ))}
           </ul>
         )}
       
-        <h2>Change user data</h2>
+        <h2>Change Password</h2>
         <form onSubmit={formikUserPatch.handleSubmit}>
           <div>
             <label htmlFor="email">Email</label>
@@ -1000,13 +1031,27 @@ export default function Home() {
           <ul className={styles.measurements}>
             {measurements.map((measurement, index) => (
               <li key={index} className={styles.measurement}>
-                <span>{measurement.weight}</span>
+                <span>{measurement.weight} kg</span>
+                <span>{measurement.height} cm</span>
               </li>
             ))}
           </ul>
         )}
         <h2>Add measurements</h2>
           <form onSubmit={formikPostMeasurements.handleSubmit}>
+          <div>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                onChange={formikPostMeasurements.handleChange}
+                value={formikPostMeasurements.values.email}
+              />
+              {formikPostMeasurements.errors.email ? (
+                <div className={styles.error}>{formikPostMeasurements.errors.email}</div>
+              ) : null}
+            </div>
             <div>
               <label htmlFor="weight">Weight</label>
               <input
@@ -1033,23 +1078,23 @@ export default function Home() {
                 <div className={styles.error}>{formikPostMeasurements.errors.height}</div>
               ) : null}
             </div>
+            <button type="submit">Add measurements</button>
+          </form>
+        <h2>Change measurements</h2>
+          <form onSubmit={formikPatchMeasurements.handleSubmit}>
             <div>
               <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                onChange={formikPostMeasurements.handleChange}
-                value={formikPostMeasurements.values.email}
+                onChange={formikPatchMeasurements.handleChange}
+                value={formikPatchMeasurements.values.email}
               />
-              {formikPostMeasurements.errors.email ? (
-                <div className={styles.error}>{formikPostMeasurements.errors.email}</div>
+              {formikPatchMeasurements.errors.email ? (
+                <div className={styles.error}>{formikPatchMeasurements.errors.email}</div>
               ) : null}
             </div>
-            <button type="submit">Add measurements</button>
-          </form>
-        <h2>Change measurements</h2>
-          <form onSubmit={formikPatchMeasurements.handleSubmit}>
             <div>
               <label htmlFor="weight">Weight</label>
               <input
@@ -1074,19 +1119,6 @@ export default function Home() {
               />
               {formikPatchMeasurements.errors.height ? (
                 <div className={styles.error}>{formikPatchMeasurements.errors.height}</div>
-              ) : null}
-            </div>
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                onChange={formikPatchMeasurements.handleChange}
-                value={formikPatchMeasurements.values.email}
-              />
-              {formikPatchMeasurements.errors.email ? (
-                <div className={styles.error}>{formikPatchMeasurements.errors.email}</div>
               ) : null}
             </div>
             <button type="submit">Change measurements</button>
@@ -1128,8 +1160,8 @@ export default function Home() {
           <ul className={styles.targets}>
             {targets.map((target, index) => (
               <li key={index} className={styles.target}>
-                <span>{target.name}</span>
-                <span>{target.desc}</span>
+                <span>Target - {target.name}</span>
+                <span>Description - {target.desc}</span>
               </li>
             ))}
           </ul>
@@ -1245,8 +1277,8 @@ export default function Home() {
             <ul className={styles.activities}>
               {activities.map((activity, index) => (
                 <li key={index} className={styles.activity}>
-                  <span>{activity.name}</span>
-                  <span>{activity.desc}</span>
+                  <span>Activity - {activity.name}</span>
+                  <span>Description - {activity.desc}</span>
                 </li>
               ))}
             </ul>

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "server": "nodemon src/server/server.js",
-    "mqtt": "nodemon src/server/mqtt_server.js"
+    "mqtt": "nodemon src/server/mqtt_server.js",
+    "web": "nodemon src/server/websocket.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
