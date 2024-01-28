@@ -27,45 +27,7 @@ export default function Home() {
   const [register, setRegister] = useState(false);
   const [message, setMessage] = useState('No message');
   
-    const addNotification = (message, type) => {
-      const newNotification = { id: Date.now(), message, type };
-      setNotifications((prevNotifications) => [...prevNotifications, newNotification]);
-    };
-  
-    const removeNotification = (id) => {
-      setNotifications((prevNotifications) => prevNotifications.filter(notification => notification.id !== id));
-    };
-    useEffect(() => {
-    const simulatedNotification = {
-      id: Date.now(),
-      message: "New notification received!",
-      type: "info",
-    };
 
-    const notificationTimeout = setTimeout(() => {
-      addNotification(simulatedNotification.message, simulatedNotification.type);
-    }, 3000);
-
-    return () => clearTimeout(notificationTimeout);
-  }, []);
-
-  useEffect(() => {
-    const eventSource = new EventSource('http://localhost:4000/events');
-
-    eventSource.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      setMessage("data.message");
-    };
-
-    eventSource.onerror = (error) => {
-      console.error('EventSource failed:', error);
-      eventSource.close();
-    };
-
-    return () => {
-      eventSource.close();
-    };
-  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -89,7 +51,7 @@ export default function Home() {
         setLogout(true);
         client.publish('user/login', 'User logged in successfully', { qos: 0, retain: false });
         client.publish('user/presence', 'User is online', { qos: 0, retain: false });
-
+        client.publish('user/notifications', 'User logged in successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd logowania');
       }
@@ -114,6 +76,7 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         alert('Zarejestrowano');
+        client.publish('user/notification', 'User registered in successfully', { qos: 0, retain: false });
         client.publish('user/register', 'User registered in successfully', { qos: 0, retain: false });
         setUser(data);
         setLogout(true);
@@ -142,6 +105,8 @@ export default function Home() {
         alert('Wylogowano');
         setLogout(prevState => !prevState)
         client.publish('user/logout', 'User logged out successfully', { qos: 0, retain: false });
+        client.publish('user/presence', 'User is offline', { qos: 0, retain: false });
+        client.publish('user/notifications', 'User logged out successfully', { qos: 0, retain: false });
         setUser(null);
       }
     },
@@ -178,6 +143,7 @@ export default function Home() {
         const data = await res.json();
         alert('Zmieniono dane');
         setUser(data);
+        client.publish('user/notifactions', 'User updated the account successfully', { qos: 0, retain: false });
         client.publish('user/updateUser', 'User updated the account successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd zmiany danych');
@@ -203,6 +169,7 @@ export default function Home() {
         if (data.success) {
           alert('Usunięto konto');
           client.publish('user/deleteUser', 'User deleted the account successfully', { qos: 0, retain: false });
+          client.publish('user/notifications', 'User deleted the account successfully', { qos: 0, retain: false });
         } else {
           alert('Błąd przy usuwaniu konta');
         }
@@ -233,8 +200,8 @@ export default function Home() {
         const data = await res.json();
         alert("Pobrano pomiary");
         setMeasurements(data);
-        client.publish('user/logout', 'User got measurements successfully', { qos: 0, retain: false });
-
+        client.publish('user/measurementsGet', 'User got measurements successfully', { qos: 0, retain: false });
+        client.publish('user/notifications', 'User got measurements successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy pobieraniu pomiarów');
       }
@@ -263,8 +230,8 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         alert("Dodano pomiary");
-        client.publish('user/logout', 'User added measurements successfully', { qos: 0, retain: false });
-
+        client.publish('user/measurementsAdd', 'User added measurements successfully', { qos: 0, retain: false });
+        client.publish('user/notifications', 'User added measurements successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy dodawaniu pomiarów');
       }
@@ -295,7 +262,7 @@ export default function Home() {
         const data = await res.json();
         alert("Zmieniono pomiary");
         client.publish('user/measurementsPatch', 'User updated measurements successfully', { qos: 0, retain: false });
-
+        client.publish('user/notifications', 'User updated measurements successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy zmianie pomiarów');
       }
@@ -322,7 +289,7 @@ export default function Home() {
         const data = await res.json();
         alert("Usunięto pomiary");
         client.publish('user/measurementsDelete', 'User deleted measurements successfully', { qos: 0, retain: false });
-
+        client.publish('user/notifications', 'User deleted measurements successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy usuwaniu pomiarów');
       }
@@ -345,7 +312,7 @@ export default function Home() {
         alert("Pobrano cele");
         setTargets(data);
         client.publish('user/targetsGet', 'User got the target successfully', { qos: 0, retain: false });
-
+        client.publish('user/notifications', 'User got the target successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy pobieraniu celów');
       }
@@ -373,7 +340,7 @@ export default function Home() {
         const data = await res.json();
         alert("Dodano cele");
         client.publish('user/targetsPost', 'User added the target successfully', { qos: 0, retain: false });
-        
+        client.publish('user/notifications', 'User added the target successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy dodawaniu celów');
       }
@@ -401,7 +368,7 @@ export default function Home() {
       if (res.ok) {
         alert("Zmieniono cele");
         client.publish('user/targetsPatch', 'User updated the target successfully', { qos: 0, retain: false });
-
+        client.publish('user/notifications', 'User updated the target successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy zmianie celów');
       }
@@ -445,6 +412,7 @@ export default function Home() {
         const data = await res.json();
         alert("Pobrano aktywności");
         setActivities(data);
+        client.publish('user/notifications', 'User got the activities successfully', { qos: 0, retain: false });
         client.publish('user/activitiesGet', 'User got the activities successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy pobieraniu aktywności');
@@ -472,6 +440,8 @@ export default function Home() {
       });
       if (res.ok) {
         alert("Dodano aktywności");
+        client.publish('user/activitiesPost', 'User added the activities successfully', { qos: 0, retain: false });
+        client.publish('user/notifications', 'User added the activities successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy dodawaniu aktywności');
       }
@@ -497,7 +467,7 @@ export default function Home() {
       });
       if (res.ok) {
         alert("Zmieniono aktywności");
-        client.publish('user/activitiesPost', 'User updated the activities successfully', { qos: 0, retain: false });
+        client.publish('user/activitiesPatch', 'User updated the activities successfully', { qos: 0, retain: false });
 
       } else {
         alert('Błąd przy zmianie aktywności');
@@ -523,7 +493,7 @@ export default function Home() {
       if (res.ok) {
         alert("Usunięto aktywności");
         client.publish('user/activitiesDelete', 'User deleted the activities successfully', { qos: 0, retain: false });
-
+        client.publish('user/notifications', 'User deleted the activities successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy usuwaniu aktywności');
       }
@@ -538,6 +508,8 @@ export default function Home() {
     }
   }, [client]);
 
+
+  
   
 
 
@@ -614,44 +586,62 @@ export default function Home() {
     });
 
     client.on('message', (topic, message, packet) => {
-      if (topic === 'user/presence') {
+      if (topic === 'user/notification') {
         toast.info(`${client.toString()} is online`);
       }
       console.log(`Received Message: ${message.toString()} On topic: ${topic}`);
       if (topic === 'user/login') {
         toast.success('Logged in successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/register') {
         toast.success('Registered successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/logout') {
         toast.success('Logged out successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/updateUser') {
         toast.success('Updated the account successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/deleteUser') {
         toast.success('Deleted the account successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/measurementsGet') {
         toast.success('Got measurements successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/measurementsPost') {
         toast.success('Added measurements successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/measurementsPatch') {
         toast.success('Updated measurements successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/measurementsDelete') {
         toast.success('Deleted measurements successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/targetsGet') {
         toast.success('Got targets successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/targetsPost') {
         toast.success('Added targets successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/targetsPatch') {
         toast.success('Updated targets successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/targetsDelete') {
         toast.success('Deleted targets successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/activitiesGet') {
         toast.success('Got activities successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/activitiesPost') {
         toast.success('Added activities successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/activitiesPatch') {
         toast.success('Updated activities successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       } else if (topic === 'user/activitiesDelete') {
         toast.success('Deleted activities successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
+
       }
     });
 
@@ -667,10 +657,7 @@ export default function Home() {
       <div className="nav">
         <div className="Logo">Health Tracker</div>
       </div>
-      <div>
-      <h1>Server-Sent Events</h1>
-      <p>{message}</p>
-    </div>
+
       {!logout && 
       <>
       <div className="LoginContainer">
@@ -812,12 +799,14 @@ export default function Home() {
     <div className="NotificationTab">
           <h2>Notifications</h2>
           <ul>
-            {notifications.map((notification) => (
-              <li key={notification.id} className={`notification ${notification.type}`}>
-                <span>{notification.message}</span>
-                <button onClick={() => removeNotification(notification.id)}>CLOSE</button>
-              </li>
-            ))}
+              {notifications && notifications.length > 0  && (
+                notifications.map((notification, index) => (
+                  <li key={index} className={styles.notification}>
+                    <span>{notification}</span>
+                    <button onClick={() => setNotifications(prevState => prevState.filter((_, i) => i !== index))}>X</button>
+                  </li>
+                ))
+              )}
           </ul>
       </div>
       <div className="UserContainer">

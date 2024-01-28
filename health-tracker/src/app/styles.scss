@@ -3,16 +3,8 @@ body {
     padding: 0;
     font-family: sans-serif;
     background-color: orange;
-}
-ul {
-    li {
-        font-size: 1em;
-        padding: 0.5em;
-        margin: 0.5em;
-        span {
-            font-weight: bold;
-            margin: 1em;
-        }
+    button {
+        cursor: pointer;
     }
 }
 h1 {
@@ -176,6 +168,17 @@ h1 {
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
+    ul {
+        li {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+            span {
+                font-weight: bold;
+                margin: 1em;
+            }
+        }
+    }
     button {
         background-color: black;
         font-weight: bold;
@@ -205,6 +208,17 @@ h1 {
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
+    ul {
+    li {
+        font-size: 1em;
+        padding: 0.5em;
+        margin: 0.5em;
+        span {
+            font-weight: bold;
+            margin: 1em;
+        }
+    }
+}
     button {
         background-color: black;
         font-weight: bold;
@@ -291,6 +305,17 @@ h1 {
         }
         button {
             font-size: 1em;
+        }
+    }
+    ul {
+        li {
+            font-size: 1em;
+            padding: 0.5em;
+            margin: 0.5em;
+            span {
+                font-weight: bold;
+                margin: 1em;
+            }
         }
     }
 }
