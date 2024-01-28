@@ -169,7 +169,7 @@ export default function Home() {
     onSubmit: async (values) => {
       const res = await fetch("http://localhost:4000/logout", { 
         method: "POST",
-        body: JSON.stringify(values, { resetForm }),
+        body: JSON.stringify(values),
         headers: {
           "Content-Type": "application/json",
         },
@@ -183,7 +183,6 @@ export default function Home() {
         client.publish('user/presence', 'User is offline', { qos: 0, retain: false });
         setUser(null);
         setEmail("");
-        resetForm();
 
       }
     },
