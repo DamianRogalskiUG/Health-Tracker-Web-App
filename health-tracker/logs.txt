@@ -81,3 +81,199 @@
 2024-01-28T17:50:13.647Z - Server is running on port 4000
 2024-01-28T17:50:23.853Z - Server is running on port 4000
 2024-01-28T17:50:39.873Z - [object Object]
+2024-01-28T17:51:21.841Z - Server is running on port 4000
+2024-01-28T17:52:01.833Z - Server is running on port 4000
+2024-01-28T17:53:02.142Z - Server is running on port 4000
+2024-01-28T17:54:10.883Z - Server is running on port 4000
+2024-01-28T17:54:23.280Z - Server is running on port 4000
+2024-01-28T17:54:40.979Z - [object Object]
+2024-01-28T17:55:01.799Z - Server is running on port 4000
+2024-01-28T17:56:01.648Z - Server is running on port 4000
+2024-01-28T17:57:15.278Z - Server is running on port 4000
+2024-01-28T17:57:55.821Z - BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+2024-01-28T17:58:21.833Z - BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+2024-01-28T17:58:35.716Z - Server is running on port 4000
+2024-01-28T17:58:38.081Z - BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+2024-01-28T17:58:52.775Z - Server is running on port 4000
+2024-01-28T17:58:56.900Z - 
+2024-01-28T17:59:06.324Z - 
+2024-01-28T17:59:20.518Z - 
+2024-01-28T17:59:21.284Z - 
+2024-01-28T17:59:22.011Z - 
+2024-01-28T17:59:31.959Z - Server is running on port 4000
+2024-01-28T17:59:34.298Z - BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+2024-01-28T18:00:09.536Z - BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+2024-01-28T18:00:15.296Z - BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+2024-01-28T18:01:39.867Z - Server is running on port 4000
+2024-01-28T18:01:54.800Z - Server is running on port 4000
+2024-01-28T18:02:04.383Z - user logged [object Object]
+2024-01-28T18:07:23.175Z - Server is running on port 4000
+2024-01-28T18:07:36.176Z - Server is running on port 4000
+2024-01-28T18:08:41.369Z - Server is running on port 4000
+2024-01-28T18:09:08.391Z - Server is running on port 4000
+2024-01-28T18:09:22.131Z - Server is running on port 4000
+2024-01-28T18:10:06.702Z - Server is running on port 4000
+2024-01-28T18:10:36.335Z - Server is running on port 4000
+2024-01-28T18:10:42.028Z - Server is running on port 4000
+2024-01-28T18:10:58.487Z - Server is running on port 4000
+2024-01-28T18:11:04.933Z - Server is running on port 4000
+2024-01-28T18:12:42.587Z - Server is running on port 4000
+2024-01-28T18:14:12.340Z - Server is running on port 4000
+2024-01-28T18:15:37.485Z - Server is running on port 4000
+2024-01-28T18:15:45.558Z - Server is running on port 4000
+2024-01-28T18:15:57.491Z - Server is running on port 4000
+2024-01-28T18:16:08.964Z - Server is running on port 4000
+2024-01-28T18:16:36.610Z - Server is running on port 4000
+2024-01-28T18:16:42.531Z - Server is running on port 4000
+2024-01-28T18:16:52.799Z - Server is running on port 4000
+2024-01-28T18:18:10.263Z - Server is running on port 4000
+2024-01-28T18:18:14.514Z - Server is running on port 4000
+2024-01-28T18:19:36.403Z - Server is running on port 4000
+2024-01-28T18:19:47.639Z - Server is running on port 4000
+2024-01-28T18:20:00.826Z - Server is running on port 4000
+2024-01-28T18:20:34.943Z - [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2024-01-28T18:20:37.672Z - [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2024-01-28T18:20:52.324Z - GET /messages
+2024-01-28T18:21:08.677Z - Server is running on port 4000
+2024-01-28T18:21:10.452Z - GET /messages
+2024-01-28T18:21:11.285Z - GET /messages
+2024-01-28T18:21:26.104Z - GET /messages
+2024-01-28T18:21:54.984Z - POST /messages hej
+2024-01-28T18:21:59.022Z - GET /messages
+2024-01-28T18:22:50.343Z - Server is running on port 4000
+2024-01-28T18:23:30.749Z - Server is running on port 4000
+2024-01-28T18:24:54.546Z - Server is running on port 4000
+2024-01-28T18:25:41.955Z - Server is running on port 4000
+2024-01-28T18:26:11.434Z - GET /messages
+2024-01-28T18:26:17.086Z - POST /messages hej
+2024-01-28T18:26:24.463Z - GET /messages
+2024-01-28T18:27:05.536Z - Server is running on port 4000
+2024-01-28T18:27:36.299Z - Server is running on port 4000
+2024-01-28T18:28:14.161Z - Server is running on port 4000
+2024-01-28T18:28:35.389Z - Server is running on port 4000
+2024-01-28T18:30:52.172Z - Server is running on port 4000
+2024-01-28T18:31:30.610Z - Server is running on port 4000
+2024-01-28T18:31:57.862Z - Server is running on port 4000
+2024-01-28T18:32:13.290Z - POST /messages hej
+2024-01-28T18:32:35.143Z - Server is running on port 4000
+2024-01-28T18:32:37.508Z - Server is running on port 4000
+2024-01-28T18:32:40.249Z - POST /messages hej
+2024-01-28T18:32:41.230Z - POST /messages hej
+2024-01-28T18:32:41.812Z - POST /messages hej
+2024-01-28T18:32:42.228Z - POST /messages hej
+2024-01-28T18:32:51.390Z - Server is running on port 4000
+2024-01-28T18:33:22.720Z - Server is running on port 4000
+2024-01-28T18:33:36.132Z - Server is running on port 4000
+2024-01-28T18:33:39.194Z - POST /messages hej
+2024-01-28T18:33:48.985Z - POST /messages hej
+2024-01-28T18:34:07.977Z - Server is running on port 4000
+2024-01-28T18:34:13.754Z - POST /messages hej
+2024-01-28T18:34:24.606Z - Server is running on port 4000
+2024-01-28T18:34:28.298Z - POST /messages hej
+2024-01-28T18:34:38.067Z - Server is running on port 4000
+2024-01-28T18:34:40.333Z - POST /messages hej
+2024-01-28T18:35:42.308Z - Server is running on port 4000
+2024-01-28T18:36:16.751Z - Server is running on port 4000
+2024-01-28T18:36:39.269Z - Server is running on port 4000
+2024-01-28T18:36:49.291Z - POST /messages hej
+2024-01-28T18:37:25.164Z - Server is running on port 4000
+2024-01-28T18:37:28.226Z - POST /messages hej
+2024-01-28T18:37:38.134Z - user logged [object Object]
+2024-01-28T18:37:45.719Z - POST /messages hej
+2024-01-28T18:37:47.105Z - POST /messages hej
+2024-01-28T18:38:03.728Z - Server is running on port 4000
+2024-01-28T18:38:08.639Z - POST /messages hej
+2024-01-28T18:38:24.920Z - Server is running on port 4000
+2024-01-28T18:38:28.111Z - POST /messages hej
+2024-01-28T18:38:43.838Z - Server is running on port 4000
+2024-01-28T18:38:46.627Z - POST /messages hej
+2024-01-28T18:38:55.056Z - user logged [object Object]
+2024-01-28T18:38:59.977Z - POST /messages hej
+2024-01-28T18:39:15.221Z - Server is running on port 4000
+2024-01-28T18:39:22.126Z - Server is running on port 4000
+2024-01-28T18:39:32.389Z - POST /messages hej
+2024-01-28T18:39:39.816Z - user logged [object Object]
+2024-01-28T18:39:52.276Z - user logged [object Object]
+2024-01-28T18:39:55.664Z - POST /messages 1
+2024-01-28T18:39:56.394Z - POST /messages 1
+2024-01-28T18:39:56.728Z - POST /messages 1
+2024-01-28T18:39:56.912Z - POST /messages 1
+2024-01-28T18:39:57.077Z - POST /messages 1
+2024-01-28T18:39:57.241Z - POST /messages 1
+2024-01-28T18:40:08.800Z - Server is running on port 4000
+2024-01-28T18:40:20.972Z - user logged [object Object]
+2024-01-28T18:42:21.574Z - Server is running on port 4000
+2024-01-28T18:42:31.931Z - Server is running on port 4000
+2024-01-28T18:42:45.889Z - Server is running on port 4000
+2024-01-28T18:42:47.119Z - user logged out
+2024-01-28T18:42:51.019Z - user logged [object Object]
+2024-01-28T18:42:55.873Z - POST /messages hej
+2024-01-28T18:42:55.929Z - POST /messages hej
+2024-01-28T18:43:22.872Z - Server is running on port 4000
+2024-01-28T18:43:24.221Z - POST /messages hej
+2024-01-28T18:43:28.202Z - POST /messages hej
+2024-01-28T18:43:28.788Z - POST /messages hej
+2024-01-28T18:43:28.975Z - POST /messages hej
+2024-01-28T18:43:29.150Z - POST /messages hej
+2024-01-28T18:43:35.328Z - POST /messages Witaj
+2024-01-28T18:44:03.348Z - Server is running on port 4000
+2024-01-28T18:44:12.402Z - user logged [object Object]
+2024-01-28T18:44:41.766Z - Server is running on port 4000
+2024-01-28T18:44:44.244Z - POST /messages hej
+2024-01-28T18:44:51.999Z - Server is running on port 4000
+2024-01-28T18:45:00.085Z - Server is running on port 4000
+2024-01-28T18:45:12.177Z - Server is running on port 4000
+2024-01-28T18:45:18.507Z - Server is running on port 4000
+2024-01-28T18:45:22.067Z - Server is running on port 4000
+2024-01-28T18:45:28.492Z - Server is running on port 4000
+2024-01-28T18:45:37.156Z - user logged [object Object]
+2024-01-28T18:45:42.784Z - POST /messages hej
+2024-01-28T18:46:20.527Z - Server is running on port 4000
+2024-01-28T18:46:30.029Z - Server is running on port 4000
+2024-01-28T18:46:43.981Z - Server is running on port 4000
+2024-01-28T18:46:50.464Z - Server is running on port 4000
+2024-01-28T18:47:00.568Z - Server is running on port 4000
+2024-01-28T18:47:16.228Z - Server is running on port 4000
+2024-01-28T18:47:24.171Z - POST /messages HEJ
+2024-01-28T18:47:34.023Z - user logged [object Object]
+2024-01-28T18:47:40.162Z - POST /messages HEJ
+2024-01-28T18:47:41.044Z - POST /messages HEJ
+2024-01-28T18:47:50.335Z - Server is running on port 4000
+2024-01-28T18:47:52.185Z - POST /messages HEJ
+2024-01-28T18:48:04.591Z - POST /messages hej
+2024-01-28T18:48:16.359Z - user logged [object Object]
+2024-01-28T18:48:26.862Z - POST /messages hej
+2024-01-28T18:48:56.016Z - Server is running on port 4000
+2024-01-28T18:49:01.142Z - POST /messages hej
+2024-01-28T18:49:08.569Z - POST /messages hej
+2024-01-28T18:49:28.428Z - Server is running on port 4000
+2024-01-28T18:49:31.235Z - POST /messages hej
+2024-01-28T18:49:38.713Z - POST /messages anonim
+2024-01-28T18:49:56.473Z - Server is running on port 4000
+2024-01-28T18:50:02.195Z - POST /messages anonim
+2024-01-28T18:50:14.170Z - user logged [object Object]
+2024-01-28T18:50:17.455Z - POST /messages anonim
+2024-01-28T18:50:24.603Z - Server is running on port 4000
+2024-01-28T18:50:28.234Z - user logged out
+2024-01-28T18:50:32.393Z - user logged [object Object]
+2024-01-28T18:50:35.281Z - POST /messages anonim
+2024-01-28T18:51:16.913Z - Server is running on port 4000
+2024-01-28T18:51:32.353Z - user logged [object Object]
+2024-01-28T18:51:36.501Z - POST /messages 1
+2024-01-28T18:52:25.874Z - Server is running on port 4000
+2024-01-28T18:52:37.403Z - user logged [object Object]
+2024-01-28T18:52:43.402Z - POST /messages hej
+2024-01-28T18:53:24.444Z - Server is running on port 4000
+2024-01-28T18:53:26.329Z - POST /messages  hej
+2024-01-28T18:53:31.348Z - Server is running on port 4000
+2024-01-28T18:53:32.732Z - POST /messages  hej
+2024-01-28T18:53:48.077Z - Server is running on port 4000
+2024-01-28T18:53:55.823Z - POST /messages  hej
+2024-01-28T18:54:02.915Z - user logged [object Object]
+2024-01-28T18:54:08.144Z - POST /messages  hej
+2024-01-28T18:54:24.103Z - Server is running on port 4000
+2024-01-28T18:54:25.299Z - POST /messages t@t.com hej
+2024-01-28T18:54:34.356Z - Server is running on port 4000
+2024-01-28T18:54:35.496Z - POST /messages t@t.com hej
+2024-01-28T18:54:37.206Z - user logged out
+2024-01-28T18:54:41.131Z - POST /messages Anonim hej

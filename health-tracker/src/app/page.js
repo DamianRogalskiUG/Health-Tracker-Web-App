@@ -25,8 +25,45 @@ export default function Home() {
   const [logout, setLogout] = useState(false);
   const [login, setLogin] = useState(false);
   const [register, setRegister] = useState(false);
-  const [message, setMessage] = useState('No message');
-  
+  const [httpChatMessages, setHttpChatMessages] = useState([]);
+  const [email, setEmail] = useState("");
+
+
+  const formikHttpChat = useFormik({
+    initialValues: {
+      message: "",
+    },
+    validationSchema: Yup.object({
+      message: Yup.string().required('Message is required'),
+    }),
+    onSubmit: async (values) => {
+      try {
+
+        const res = await fetch("http://localhost:4000/messages", { 
+          method: "POST",
+          body: JSON.stringify(
+            {
+              message: values.message,
+              user: email || "Anonim",
+            }
+          ),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log(res)
+        if (res.ok) {
+          const data = await res.json();
+          setHttpChatMessages((prevMessages) => [...prevMessages, data]);
+        } else {
+          alert('Błąd przy wysyłaniu wiadomości');
+        }
+      } catch (error) {
+        console.error('Błąd przy wysyłaniu wiadomości:', error);
+      }
+    },
+  });
+
 
 
   const formik = useFormik({
@@ -45,6 +82,8 @@ export default function Home() {
       });
       if (res.ok) {
         const data = await res.json();
+        setEmail(data.user.email);
+        console.log(data)
         Cookie.set("token", data.token);
         alert('Zalogowano');
         setUser(data);
@@ -79,6 +118,7 @@ export default function Home() {
         client.publish('user/register', 'User registered in successfully', { qos: 0, retain: false });
         setUser(data);
         setLogout(true);
+        setEmail(values.email);
       } else {
         alert('Błąd rejestracji');
       }
@@ -106,6 +146,7 @@ export default function Home() {
         client.publish('user/logout', 'User logged out successfully', { qos: 0, retain: false });
         client.publish('user/presence', 'User is offline', { qos: 0, retain: false });
         setUser(null);
+        setEmail("");
       }
     },
   });
@@ -564,11 +605,6 @@ export default function Home() {
     console.log('Connecting mqtt client');
     const client = mqtt.connect(host, options);
 
-    client.on('error', (err) => {
-      console.log('Connection error: ', err);
-      client.end();
-    });
-
     client.on('reconnect', () => {
       console.log('Reconnecting...');
     });
@@ -777,7 +813,7 @@ export default function Home() {
         }
       </div>
       <div className="ChatContainer">
-        <h2>Chat</h2>
+        <h2>MQTT Chat</h2>
         <div className={styles.chatContainer}>
           <div className={styles.chatMessages}>
             {chatMessages.map((msg, index) => (
@@ -808,7 +844,29 @@ export default function Home() {
           <button type="submit">Send</button>
         </form>
       </div>
+      
     </div>
+    <div className="ChatContainer">
+          <h2>HTTP Chat</h2>
+          {httpChatMessages && httpChatMessages.map((msg, index) => (
+            <div key={index}>
+              <strong>{msg.user}</strong> {msg.message}
+            </div>
+          ))
+          }
+          <form onSubmit={formikHttpChat.handleSubmit}>
+            <div>
+              <input
+                type="text"
+                id="message"
+                name="message"
+                onChange={formikHttpChat.handleChange}
+                value={formikHttpChat.values.message}
+              />
+            </div>
+            <button type="submit">Send</button>
+          </form>
+        </div>
     <div className="NotificationTab">
           <h2>Notifications</h2>
           <ul>
@@ -850,6 +908,7 @@ export default function Home() {
             ))}
           </ul>
         )}
+      
         <h2>Change user data</h2>
         <form onSubmit={formikUserPatch.handleSubmit}>
           <div>

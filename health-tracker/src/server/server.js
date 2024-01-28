@@ -6,11 +6,12 @@ const cookieParser = require('cookie-parser');
 const mqtt = require('mqtt');
 const jwt = require('jsonwebtoken');
 const http = require("http");
-const WebSocket = require("ws");
-const sse = require('server-sent-events');
 const SseChannel = require('sse-channel');
 const https = require('node:https');
 const fs = require('node:fs');
+const { ObjectId } = require('mongodb');
+const bodyParser = require('body-parser');
+
 
 const options = {
     key: fs.readFileSync('file.key'),
@@ -22,6 +23,9 @@ const port = 4000;
 const JWT_SECRET = 'secret_password';
 const server = https.createServer(options, app);
 
+
+const chatMessages = ['test message 1', 'test message 2', 'test message 3'];
+
 const mqttUrl = 'mqtt://localhost:1883';
 
 const mqttClient = mqtt.connect(mqttUrl);
@@ -29,6 +33,8 @@ const mqttClient = mqtt.connect(mqttUrl);
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
+app.use(bodyParser.json());
+
 
 const createToken = (user) => {
     const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
@@ -50,6 +56,29 @@ setInterval(() => {
     dateChanel.send({ date: new Date().toISOString() });
 }, 1000);
 
+app.get('/messages', (req, res) => {
+    try {
+        console.log('GET /messages');
+        res.json(chatMessages);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+    
+  });
+
+app.post('/messages', (req, res) => {
+    try {
+        const { user, message } = req.body;
+        console.log('POST /messages', user, message);
+        chatMessages.push({user, message});
+        res.json({user, message});
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+      }
+
+});
 
 app.get('/users', async (req, res) => {
     try {
@@ -66,6 +95,7 @@ app.get('/users', async (req, res) => {
         console.log(error)
     } 
 });
+
 
 app.post('/register', async (req, res) => {
     try {
