@@ -327,7 +327,12 @@ app.post('/activities', async (req, res) => {
     try {
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('activities').findOne(req.body);
+        const result = await db.collection('activities').insertOne(
+            { 
+                name: req.body.name,
+                desc: req.body.desc,
+            }
+        );
         console.log(result);
         res.json(result);
         

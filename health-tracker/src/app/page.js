@@ -426,6 +426,31 @@ export default function Home() {
     }
   });
 
+  const formikPostActivities = useFormik({
+    initialValues: {
+      name: "",
+      desc: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      desc: Yup.string().required("Required"),
+      }),
+    onSubmit: async (values) => {
+      const res = await fetch(`http://localhost:4000/activities`, {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        alert("Dodano aktywności");
+      } else {
+        alert('Błąd przy dodawaniu aktywności');
+      }
+    }
+  });
+
   useEffect(() => {
     if (client) {
       client.subscribe('user/presence', { qos: 0 });
@@ -502,6 +527,7 @@ export default function Home() {
       client.subscribe('user/targetsPatch', { qos: 0 });
       client.subscribe('user/targetsDelete', { qos: 0 });
       client.subscribe('user/activitiesGet', { qos: 0 });
+      client.subscribe('user/activitiesPost', { qos: 0 });
     });
 
     client.on('message', (topic, message, packet) => {
@@ -537,6 +563,8 @@ export default function Home() {
         toast.success('Deleted targets successfully');
       } else if (topic === 'user/activitiesGet') {
         toast.success('Got activities successfully');
+      } else if (topic === 'user/activitiesPost') {
+        toast.success('Added activities successfully');
       }
     });
 
@@ -1013,6 +1041,36 @@ export default function Home() {
               ))}
             </div>
           )}
+          <h2>Add activities</h2>
+            <form onSubmit={formikPostActivities.handleSubmit}>
+              <div>
+                <label htmlFor="name">Name</label>
+                <input
+                  type="name"
+                  id="name"
+                  name="name"
+                  onChange={formikPostActivities.handleChange}
+                  value={formikPostActivities.values.name}
+                />
+                {formikPostActivities.errors.name ? (
+                  <div className={styles.error}>{formikPostActivities.errors.name}</div>
+                ) : null}
+              </div>
+              <div>
+                <label htmlFor="desc">Description</label>
+                <input
+                  type="desc"
+                  id="desc"
+                  name="desc"
+                  onChange={formikPostActivities.handleChange}
+                  value={formikPostActivities.values.desc}
+                />
+                {formikPostActivities.errors.desc ? (
+                  <div className={styles.error}>{formikPostActivities.errors.desc}</div>
+                ) : null}
+              </div>
+              <button type="submit">Add activities</button>
+            </form>
     </>
   );
 }
