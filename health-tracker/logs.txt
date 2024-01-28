@@ -72,3 +72,12 @@
 2024-01-28T17:43:04.367Z - Server is running on port 4000
 2024-01-28T17:43:14.878Z - user logged [object Object]
 2024-01-28T17:43:17.600Z - user logged out
+2024-01-28T17:45:58.452Z - Server is running on port 4000
+2024-01-28T17:47:07.675Z - Server is running on port 4000
+2024-01-28T17:47:32.611Z - Server is running on port 4000
+2024-01-28T17:48:05.850Z - Server is running on port 4000
+2024-01-28T17:49:10.966Z - Server is running on port 4000
+2024-01-28T17:49:18.615Z - [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2024-01-28T17:50:13.647Z - Server is running on port 4000
+2024-01-28T17:50:23.853Z - Server is running on port 4000
+2024-01-28T17:50:39.873Z - [object Object]

@@ -51,7 +51,6 @@ export default function Home() {
         setLogout(true);
         client.publish('user/login', 'User logged in successfully', { qos: 0, retain: false });
         client.publish('user/presence', 'User is online', { qos: 0, retain: false });
-        client.publish('user/notifications', 'User logged in successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd logowania');
       }
@@ -106,7 +105,6 @@ export default function Home() {
         setLogout(prevState => !prevState)
         client.publish('user/logout', 'User logged out successfully', { qos: 0, retain: false });
         client.publish('user/presence', 'User is offline', { qos: 0, retain: false });
-        client.publish('user/notifications', 'User logged out successfully', { qos: 0, retain: false });
         setUser(null);
       }
     },
@@ -143,7 +141,6 @@ export default function Home() {
         const data = await res.json();
         alert('Zmieniono dane');
         setUser(data);
-        client.publish('user/notifactions', 'User updated the account successfully', { qos: 0, retain: false });
         client.publish('user/updateUser', 'User updated the account successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd zmiany danych');
@@ -169,7 +166,6 @@ export default function Home() {
         if (data.success) {
           alert('Usunięto konto');
           client.publish('user/deleteUser', 'User deleted the account successfully', { qos: 0, retain: false });
-          client.publish('user/notifications', 'User deleted the account successfully', { qos: 0, retain: false });
         } else {
           alert('Błąd przy usuwaniu konta');
         }
@@ -201,7 +197,6 @@ export default function Home() {
         alert("Pobrano pomiary");
         setMeasurements(data);
         client.publish('user/measurementsGet', 'User got measurements successfully', { qos: 0, retain: false });
-        client.publish('user/notifications', 'User got measurements successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy pobieraniu pomiarów');
       }
@@ -231,7 +226,6 @@ export default function Home() {
         const data = await res.json();
         alert("Dodano pomiary");
         client.publish('user/measurementsAdd', 'User added measurements successfully', { qos: 0, retain: false });
-        client.publish('user/notifications', 'User added measurements successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy dodawaniu pomiarów');
       }
@@ -262,7 +256,6 @@ export default function Home() {
         const data = await res.json();
         alert("Zmieniono pomiary");
         client.publish('user/measurementsPatch', 'User updated measurements successfully', { qos: 0, retain: false });
-        client.publish('user/notifications', 'User updated measurements successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy zmianie pomiarów');
       }
@@ -289,9 +282,32 @@ export default function Home() {
         const data = await res.json();
         alert("Usunięto pomiary");
         client.publish('user/measurementsDelete', 'User deleted measurements successfully', { qos: 0, retain: false });
-        client.publish('user/notifications', 'User deleted measurements successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy usuwaniu pomiarów');
+      }
+    }
+  });
+  const formikGetUsers = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      }),
+    onSubmit: async (values) => {
+      const res = await fetch(`http://localhost:4000/users?email=${values.email}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        alert("Pobrano użytkowników");
+        setUsers(data);
+        client.publish('user/usersGet', 'User got the users successfully', { qos: 0, retain: false });
+      } else {
+        alert('Błąd przy pobieraniu użytkowników');
       }
     }
   });
@@ -312,7 +328,6 @@ export default function Home() {
         alert("Pobrano cele");
         setTargets(data);
         client.publish('user/targetsGet', 'User got the target successfully', { qos: 0, retain: false });
-        client.publish('user/notifications', 'User got the target successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy pobieraniu celów');
       }
@@ -340,7 +355,6 @@ export default function Home() {
         const data = await res.json();
         alert("Dodano cele");
         client.publish('user/targetsPost', 'User added the target successfully', { qos: 0, retain: false });
-        client.publish('user/notifications', 'User added the target successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy dodawaniu celów');
       }
@@ -368,7 +382,6 @@ export default function Home() {
       if (res.ok) {
         alert("Zmieniono cele");
         client.publish('user/targetsPatch', 'User updated the target successfully', { qos: 0, retain: false });
-        client.publish('user/notifications', 'User updated the target successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy zmianie celów');
       }
@@ -412,7 +425,6 @@ export default function Home() {
         const data = await res.json();
         alert("Pobrano aktywności");
         setActivities(data);
-        client.publish('user/notifications', 'User got the activities successfully', { qos: 0, retain: false });
         client.publish('user/activitiesGet', 'User got the activities successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy pobieraniu aktywności');
@@ -441,7 +453,6 @@ export default function Home() {
       if (res.ok) {
         alert("Dodano aktywności");
         client.publish('user/activitiesPost', 'User added the activities successfully', { qos: 0, retain: false });
-        client.publish('user/notifications', 'User added the activities successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy dodawaniu aktywności');
       }
@@ -493,7 +504,6 @@ export default function Home() {
       if (res.ok) {
         alert("Usunięto aktywności");
         client.publish('user/activitiesDelete', 'User deleted the activities successfully', { qos: 0, retain: false });
-        client.publish('user/notifications', 'User deleted the activities successfully', { qos: 0, retain: false });
       } else {
         alert('Błąd przy usuwaniu aktywności');
       }
@@ -583,6 +593,7 @@ export default function Home() {
       client.subscribe('user/activitiesPost', { qos: 0 });
       client.subscribe('user/activitiesPatch', { qos: 0 });
       client.subscribe('user/activitiesDelete', { qos: 0 });
+      client.subscribe('user/usersGet', { qos: 0 });
     });
 
     client.on('message', (topic, message, packet) => {
@@ -641,7 +652,9 @@ export default function Home() {
       } else if (topic === 'user/activitiesDelete') {
         toast.success('Deleted activities successfully');
         setNotifications(prevState => [...prevState, message.toString()]);
-
+      } else if (topic === 'user/usersGet') {
+        toast.success('Got users successfully');
+        setNotifications(prevState => [...prevState, message.toString()]);
       }
     });
 
@@ -810,6 +823,33 @@ export default function Home() {
           </ul>
       </div>
       <div className="UserContainer">
+        <h2>Get users</h2>
+        <form onSubmit={formikGetUsers.handleSubmit}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+
+              type="email"
+              id="email"
+              name="email"
+              onChange={formikGetUsers.handleChange}
+              value={formikGetUsers.values.email}
+            />
+            {formikGetUsers.errors.email ? (
+              <div className={styles.error}>{formikGetUsers.errors.email}</div>
+            ) : null}
+          </div>
+          <button type="submit">Get users</button>
+        </form>
+        {users && users.length > 0  && (
+          <ul className={styles.users}>
+            {users.map((user, index) => (
+              <li key={index} className={styles.user}>
+                <span>{user.email}</span>
+              </li>
+            ))}
+          </ul>
+        )}
         <h2>Change user data</h2>
         <form onSubmit={formikUserPatch.handleSubmit}>
           <div>

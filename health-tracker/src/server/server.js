@@ -50,22 +50,15 @@ setInterval(() => {
     dateChanel.send({ date: new Date().toISOString() });
 }, 1000);
 
-app.get('/events', sse, (req, res) => {
-    const interval = setInterval(() => {
-        res.sse('message', { message: 'Keep up the good work!' });
-    }, 1000);
-
-    res.on('close', () => {
-        clearInterval(interval);
-    });
-});
 
 app.get('/users', async (req, res) => {
     try {
-
+        const email = req.query.email;
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('users').find({}).toArray();
+        const result = await db.collection('users').find({
+            email: { $regex: new RegExp(email), $options: 'i'}
+        }).toArray();
         console.log(result);
         res.json(result);
         
