@@ -479,6 +479,31 @@ export default function Home() {
     }
   });
 
+  const formikDeleteActivities = useFormik({
+    initialValues: {
+      name: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      }),
+    onSubmit: async (values) => {
+      const res = await fetch(`http://localhost:4000/activities`, {
+        method: "DELETE",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        alert("Usunięto aktywności");
+        client.publish('user/activitiesDelete', 'User deleted the activities successfully', { qos: 0, retain: false });
+
+      } else {
+        alert('Błąd przy usuwaniu aktywności');
+      }
+    }
+  });
+
   useEffect(() => {
     if (client) {
       client.subscribe('user/presence', { qos: 0 });
@@ -1142,7 +1167,24 @@ export default function Home() {
               </div>
               <button type="submit">Change activities</button>
             </form>
-            
+            <h2>Delete activities</h2>
+            <form onSubmit={formikDeleteActivities.handleSubmit}>
+              <div>
+                <label htmlFor="name">Name</label>
+                <input
+                  type="name"
+                  id="name"
+                  name="name"
+                  onChange={formikDeleteActivities.handleChange}
+                  value={formikDeleteActivities.values.name}
+                />
+                {formikDeleteActivities.errors.name ? (
+                  <div className={styles.error}>{formikDeleteActivities.errors.name}</div>
+                ) : null}
+              </div>
+              <button type="submit">Delete activities</button>
+            </form>
+
     </>
   );
 }

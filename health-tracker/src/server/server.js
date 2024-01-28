@@ -343,10 +343,12 @@ app.post('/activities', async (req, res) => {
 
 app.delete('/activities', async (req, res) => {
     try {
-        const { name, desc } = req.body;
+        const { name } = req.body;
         const client = await connect();
         const db = client.db("health_tracker");
-        const result = await db.collection('activities').deleteOne(req.body);
+        const result = await db.collection('activities').deleteOne(
+            { name: name }
+        );
         console.log(result);
         res.json(result);
         
