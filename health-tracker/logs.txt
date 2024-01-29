@@ -5531,3 +5531,308 @@
 2024-01-28T23:56:58.401Z - User disconnected
 2024-01-28T23:56:58.401Z - User disconnected
 2024-01-28T23:56:58.401Z - User disconnected
+2024-01-29T01:12:05.802Z - Server is running on port 4000
+2024-01-29T01:13:13.097Z - Server is running on port 4000
+2024-01-29T01:13:55.499Z - Server is running on port 4000
+2024-01-29T01:14:10.489Z - Server is running on port 4000
+2024-01-29T01:14:37.946Z - GET /messages
+2024-01-29T01:16:06.530Z - Server is running on port 4000
+2024-01-29T01:16:08.833Z - Server is running on port 4000
+2024-01-29T01:17:42.489Z - Server is running on port 4000
+2024-01-29T01:18:26.470Z - [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2024-01-29T01:20:19.634Z - Server is running on port 4000
+2024-01-29T01:20:42.999Z - Server is running on port 4000
+2024-01-29T01:21:26.289Z - Server is running on port 4000
+2024-01-29T01:21:51.837Z - Server is running on port 4000
+2024-01-29T01:23:19.165Z - Server is running on port 4000
+2024-01-29T01:23:25.887Z - Server is running on port 4000
+2024-01-29T01:23:34.977Z - Server is running on port 4000
+2024-01-29T01:24:53.115Z - Server is running on port 4000
+2024-01-29T01:25:59.430Z - Server is running on port 4000
+2024-01-29T01:26:21.764Z - Server is running on port 4000
+2024-01-29T01:26:28.671Z - Server is running on port 4000
+2024-01-29T01:26:38.090Z - Server is running on port 4000
+2024-01-29T01:26:58.496Z - Server is running on port 4000
+2024-01-29T01:27:06.441Z - Server is running on port 4000
+2024-01-29T01:27:13.029Z - Server is running on port 4000
+2024-01-29T01:27:17.817Z - Server is running on port 4000
+2024-01-29T01:27:25.126Z - Server is running on port 4000
+2024-01-29T01:27:54.574Z - Server is running on port 4000
+2024-01-29T01:28:32.369Z - Server is running on port 4000
+2024-01-29T01:28:37.172Z - Server is running on port 4000
+2024-01-29T01:28:42.192Z - Server is running on port 4000
+2024-01-29T01:28:46.214Z - Server is running on port 4000
+2024-01-29T01:28:51.563Z - Server is running on port 4000
+2024-01-29T01:28:56.738Z - Server is running on port 4000
+2024-01-29T01:29:01.795Z - Server is running on port 4000
+2024-01-29T01:29:07.031Z - Server is running on port 4000
+2024-01-29T01:29:52.272Z - Server is running on port 4000
+2024-01-29T01:29:58.995Z - Server is running on port 4000
+2024-01-29T01:30:03.174Z - Server is running on port 4000
+2024-01-29T01:32:02.972Z - Server is running on port 4000
+2024-01-29T01:32:05.450Z - Server is running on port 4000
+2024-01-29T01:33:03.382Z - Server is running on port 4000
+2024-01-29T01:33:05.855Z - Server is running on port 4000
+2024-01-29T01:34:10.283Z - Server is running on port 4000
+2024-01-29T01:34:21.671Z - Server is running on port 4000
+2024-01-29T01:34:29.235Z - Server is running on port 4000
+2024-01-29T01:34:45.495Z - Server is running on port 4000
+2024-01-29T01:35:54.531Z - Server is running on port 4000
+2024-01-29T01:36:16.538Z - Server is running on port 4000
+2024-01-29T01:36:56.880Z - Server is running on port 4000
+2024-01-29T01:37:03.569Z - Server is running on port 4000
+2024-01-29T01:37:43.041Z - Server is running on port 4000
+2024-01-29T01:39:05.708Z - Server is running on port 4000
+2024-01-29T01:40:07.664Z - Server is running on port 4000
+2024-01-29T01:40:18.987Z - Server is running on port 4000
+2024-01-29T01:48:46.594Z - [object Object],[object Object],[object Object]
+2024-01-29T01:53:14.678Z - Server is running on port 4000
+2024-01-29T01:53:29.644Z - Server is running on port 4000
+2024-01-29T01:53:47.317Z - Server is running on port 4000
+2024-01-29T01:55:40.346Z - Server is running on port 4000
+2024-01-29T01:56:03.790Z - Server is running on port 4000
+2024-01-29T01:56:24.864Z - Server is running on port 4000
+2024-01-29T01:56:33.724Z - Server is running on port 4000
+2024-01-29T01:56:40.876Z - Server is running on port 4000
+2024-01-29T01:58:22.266Z - Server is running on port 4000
+2024-01-29T02:00:10.405Z - Server is running on port 4000
+2024-01-29T02:00:30.932Z - Server is running on port 4000
+2024-01-29T02:01:14.839Z - Server is running on port 4000
+2024-01-29T02:01:46.828Z - Server is running on port 4000
+2024-01-29T02:01:50.868Z - Server is running on port 4000
+2024-01-29T02:08:43.137Z - Server is running on port 4000
+2024-01-29T02:08:51.131Z - Server is running on port 4000
+2024-01-29T02:08:55.656Z - Server is running on port 4000
+2024-01-29T02:09:05.683Z - Server is running on port 4000
+2024-01-29T02:14:54.621Z - Server is running on port 4000
+2024-01-29T02:15:04.330Z - Server is running on port 4000
+2024-01-29T02:15:13.075Z - [object Object],[object Object],[object Object]
+2024-01-29T02:15:57.063Z - Server is running on port 4000
+2024-01-29T02:15:59.394Z - User disconnected
+2024-01-29T02:15:59.394Z - User disconnected
+2024-01-29T02:15:59.824Z - GET /messages
+2024-01-29T02:15:59.878Z - GET /messages
+2024-01-29T02:16:05.469Z - User disconnected
+2024-01-29T02:16:05.469Z - User disconnected
+2024-01-29T02:16:05.469Z - User disconnected
+2024-01-29T02:16:05.469Z - User disconnected
+2024-01-29T02:16:05.854Z - GET /messages
+2024-01-29T02:16:05.908Z - GET /messages
+2024-01-29T02:16:16.338Z - User disconnected
+2024-01-29T02:16:16.338Z - User disconnected
+2024-01-29T02:16:21.617Z - Server is running on port 4000
+2024-01-29T02:16:23.948Z - User disconnected
+2024-01-29T02:16:23.948Z - User disconnected
+2024-01-29T02:16:23.948Z - User disconnected
+2024-01-29T02:16:23.948Z - User disconnected
+2024-01-29T02:16:23.949Z - User disconnected
+2024-01-29T02:16:23.949Z - User disconnected
+2024-01-29T02:16:23.949Z - User disconnected
+2024-01-29T02:16:24.342Z - GET /messages
+2024-01-29T02:16:24.411Z - GET /messages
+2024-01-29T02:17:04.665Z - Server is running on port 4000
+2024-01-29T02:17:11.429Z - User disconnected
+2024-01-29T02:17:11.429Z - User disconnected
+2024-01-29T02:17:11.430Z - User disconnected
+2024-01-29T02:17:11.430Z - User disconnected
+2024-01-29T02:17:11.430Z - User disconnected
+2024-01-29T02:17:11.431Z - User disconnected
+2024-01-29T02:17:11.431Z - User disconnected
+2024-01-29T02:17:11.432Z - User disconnected
+2024-01-29T02:17:11.432Z - User disconnected
+2024-01-29T02:17:11.432Z - User disconnected
+2024-01-29T02:17:11.432Z - User disconnected
+2024-01-29T02:17:11.433Z - User disconnected
+2024-01-29T02:17:11.433Z - User disconnected
+2024-01-29T02:17:11.433Z - User disconnected
+2024-01-29T02:17:11.433Z - User disconnected
+2024-01-29T02:17:11.435Z - User disconnected
+2024-01-29T02:17:11.435Z - User disconnected
+2024-01-29T02:17:11.435Z - User disconnected
+2024-01-29T02:17:11.435Z - User disconnected
+2024-01-29T02:17:11.435Z - User disconnected
+2024-01-29T02:17:11.435Z - User disconnected
+2024-01-29T02:17:11.435Z - User disconnected
+2024-01-29T02:17:11.436Z - User disconnected
+2024-01-29T02:17:11.436Z - User disconnected
+2024-01-29T02:17:11.436Z - User disconnected
+2024-01-29T02:17:11.436Z - User disconnected
+2024-01-29T02:17:11.436Z - User disconnected
+2024-01-29T02:17:11.436Z - User disconnected
+2024-01-29T02:17:11.436Z - User disconnected
+2024-01-29T02:17:11.436Z - User disconnected
+2024-01-29T02:17:11.437Z - User disconnected
+2024-01-29T02:17:11.437Z - User disconnected
+2024-01-29T02:17:11.437Z - User disconnected
+2024-01-29T02:17:11.437Z - User disconnected
+2024-01-29T02:17:11.838Z - GET /messages
+2024-01-29T02:17:11.883Z - GET /messages
+2024-01-29T02:17:14.212Z - User disconnected
+2024-01-29T02:17:14.212Z - User disconnected
+2024-01-29T02:17:14.213Z - User disconnected
+2024-01-29T02:17:14.213Z - User disconnected
+2024-01-29T02:17:14.596Z - GET /messages
+2024-01-29T02:17:14.648Z - GET /messages
+2024-01-29T02:17:20.192Z - POST /messages Anonim hej
+2024-01-29T02:17:20.460Z - POST /messages Anonim hej
+2024-01-29T02:17:20.691Z - POST /messages Anonim hej
+2024-01-29T02:17:20.942Z - POST /messages Anonim hej
+2024-01-29T02:17:21.239Z - POST /messages Anonim hej
+2024-01-29T02:17:23.646Z - User disconnected
+2024-01-29T02:17:23.646Z - User disconnected
+2024-01-29T02:17:23.646Z - User disconnected
+2024-01-29T02:17:23.646Z - User disconnected
+2024-01-29T02:17:23.646Z - User disconnected
+2024-01-29T02:17:23.646Z - User disconnected
+2024-01-29T02:17:23.646Z - User disconnected
+2024-01-29T02:17:23.646Z - User disconnected
+2024-01-29T02:17:23.646Z - User disconnected
+2024-01-29T02:17:23.646Z - User disconnected
+2024-01-29T02:17:23.646Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.647Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.648Z - User disconnected
+2024-01-29T02:17:23.649Z - User disconnected
+2024-01-29T02:17:23.649Z - User disconnected
+2024-01-29T02:17:23.649Z - User disconnected
+2024-01-29T02:17:23.649Z - User disconnected
+2024-01-29T02:17:23.649Z - User disconnected
+2024-01-29T02:17:23.649Z - User disconnected
+2024-01-29T02:17:23.649Z - User disconnected
+2024-01-29T02:17:23.649Z - User disconnected
+2024-01-29T02:17:27.383Z - GET /messages
+2024-01-29T02:17:27.415Z - GET /messages
+2024-01-29T02:17:45.343Z - Server is running on port 4000
+2024-01-29T02:17:45.891Z - User disconnected
+2024-01-29T02:17:46.191Z - GET /messages
+2024-01-29T02:17:46.223Z - GET /messages
+2024-01-29T02:17:49.042Z - POST /messages Anonim hej
+2024-01-29T02:17:49.369Z - POST /messages Anonim hej
+2024-01-29T02:18:11.482Z - Server is running on port 4000
+2024-01-29T02:18:19.165Z - User disconnected
+2024-01-29T02:18:19.168Z - User disconnected
+2024-01-29T02:18:19.168Z - User disconnected
+2024-01-29T02:18:19.168Z - User disconnected
+2024-01-29T02:18:19.168Z - User disconnected
+2024-01-29T02:18:19.168Z - User disconnected
+2024-01-29T02:18:19.168Z - User disconnected
+2024-01-29T02:18:19.168Z - User disconnected
+2024-01-29T02:18:19.168Z - User disconnected
+2024-01-29T02:18:19.169Z - User disconnected
+2024-01-29T02:18:19.169Z - User disconnected
+2024-01-29T02:18:19.169Z - User disconnected
+2024-01-29T02:18:19.169Z - User disconnected
+2024-01-29T02:18:19.170Z - User disconnected
+2024-01-29T02:18:19.170Z - User disconnected
+2024-01-29T02:18:19.170Z - User disconnected
+2024-01-29T02:18:19.170Z - User disconnected
+2024-01-29T02:18:19.170Z - User disconnected
+2024-01-29T02:18:19.170Z - User disconnected
+2024-01-29T02:18:19.170Z - User disconnected
+2024-01-29T02:18:19.170Z - User disconnected
+2024-01-29T02:18:19.170Z - User disconnected
+2024-01-29T02:18:19.170Z - User disconnected
+2024-01-29T02:18:19.170Z - User disconnected
+2024-01-29T02:18:19.170Z - User disconnected
+2024-01-29T02:18:19.171Z - User disconnected
+2024-01-29T02:18:19.171Z - User disconnected
+2024-01-29T02:18:19.171Z - User disconnected
+2024-01-29T02:18:19.171Z - User disconnected
+2024-01-29T02:18:19.172Z - User disconnected
+2024-01-29T02:18:19.172Z - User disconnected
+2024-01-29T02:18:19.172Z - User disconnected
+2024-01-29T02:18:19.172Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.173Z - User disconnected
+2024-01-29T02:18:19.174Z - User disconnected
+2024-01-29T02:18:19.174Z - User disconnected
+2024-01-29T02:18:19.174Z - User disconnected
+2024-01-29T02:18:19.174Z - User disconnected
+2024-01-29T02:18:19.174Z - User disconnected
+2024-01-29T02:18:19.174Z - User disconnected
+2024-01-29T02:18:19.174Z - User disconnected
+2024-01-29T02:18:19.174Z - User disconnected
+2024-01-29T02:18:19.174Z - User disconnected
+2024-01-29T02:18:19.174Z - User disconnected
+2024-01-29T02:18:19.174Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.175Z - User disconnected
+2024-01-29T02:18:19.176Z - User disconnected
+2024-01-29T02:18:19.176Z - User disconnected
+2024-01-29T02:18:19.176Z - User disconnected
+2024-01-29T02:18:19.176Z - User disconnected
+2024-01-29T02:18:19.176Z - User disconnected
+2024-01-29T02:18:19.176Z - User disconnected
+2024-01-29T02:18:19.176Z - User disconnected
+2024-01-29T02:18:19.176Z - User disconnected
+2024-01-29T02:18:19.177Z - User disconnected
+2024-01-29T02:18:19.480Z - GET /messages
+2024-01-29T02:18:19.512Z - GET /messages
+2024-01-29T02:18:23.108Z - POST /messages Anonim gej
+2024-01-29T02:18:44.448Z - Server is running on port 4000
+2024-01-29T02:21:24.068Z - Server is running on port 4000
+2024-01-29T02:21:28.082Z - Server is running on port 4000
+2024-01-29T02:21:38.628Z - Server is running on port 4000
+2024-01-29T02:21:55.903Z - Server is running on port 4000
+2024-01-29T02:22:02.586Z - Server is running on port 4000
+2024-01-29T02:22:05.095Z - User disconnected
+2024-01-29T02:22:05.493Z - GET /messages
+2024-01-29T02:22:05.552Z - GET /messages
+2024-01-29T02:22:09.422Z - User disconnected
+2024-01-29T02:22:09.423Z - User disconnected
+2024-01-29T02:22:09.423Z - User disconnected
+2024-01-29T02:22:09.423Z - User disconnected
+2024-01-29T02:22:09.423Z - User disconnected
+2024-01-29T02:22:09.424Z - User disconnected
+2024-01-29T02:22:09.799Z - GET /messages
+2024-01-29T02:22:09.855Z - GET /messages
+2024-01-29T02:22:12.631Z - POST /messages Anonim hej

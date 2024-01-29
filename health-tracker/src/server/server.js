@@ -8,16 +8,22 @@ const jwt = require('jsonwebtoken');
 const fs = require('node:fs');
 const bodyParser = require('body-parser');
 const http = require('http');
+const https = require('https');
+
+const options = {
+    key: fs.readFileSync('file.key'),
+    cert: fs.readFileSync('cert.crt')
+    };
 
 const app = express();
 const server = http.createServer(app);
+// const server = https.createServer(options, app);
 const port = 4000;
 const JWT_SECRET = 'secret_password';
 const io = require('socket.io')(server, {
   cors: {
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST'],
-    credentials: true,
   },
 });
 
